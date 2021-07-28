@@ -6,7 +6,7 @@ class AdminMenu:
     def __init__(self, top=None):
         top.geometry("1366x768")
         top.resizable(False, False)
-        top.title("Sistema de Gestao de vendas")
+        top.title("Sistema de Gestao de vendasss")
         top.iconbitmap("imagens/shopping_cart.ico")
 
         self.label1 = Label(admMenu)
