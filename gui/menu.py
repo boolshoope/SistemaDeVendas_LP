@@ -6,13 +6,13 @@ class AdminMenu:
     def __init__(self, top=None):
         top.geometry("1366x768")
         top.resizable(False, False)
-        top.title("Sistema de Gestao de vendasss")
+        top.title("Sistema de Gestao de vendas")
         top.iconbitmap("imagens/shopping_cart.ico")
 
         self.label1 = Label(admMenu)
         self.label1.place(relx=0, rely=0, width=1366, height=768)
 
-        self.lblUser = Label(admMenu, text="Administrador")
+        self.lblUser = Label(admMenu, text="Administradoor")
         self.lblUser.place(relx=0.046, rely=0.056, width=105, height=30)
         self.lblUser.configure(font="-family {Calibri} -size 12")
         self.lblUser.configure(background="#FE6B61", foreground="#ffffff")
