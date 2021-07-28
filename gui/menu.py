@@ -1,7 +1,7 @@
 from tkinter import *
 
 
-# classe do adiministrador
+# Menu do adiministrador
 class AdminMenu:
     def __init__(self, top=None):
         top.geometry("1366x768")
