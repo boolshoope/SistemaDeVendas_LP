@@ -3,7 +3,8 @@
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 from gui import menu
-from tkinter import *
+# from gui.gerir import produtos
+# from gui.adicionar import addProduto
 
 
 def print_hi(name):
@@ -14,5 +15,6 @@ def print_hi(name):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print_hi('PyCharmm')
+
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
