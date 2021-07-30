@@ -26,4 +26,3 @@ from libs import app
 #
 
 app
-s
