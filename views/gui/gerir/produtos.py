@@ -1,7 +1,8 @@
 from time import strftime
 from tkinter import *
 from tkinter import ttk
-from gui.adicionar import addProduto
+
+from views.gui.adicionar import addProduto
 
 
 class Produtos:
