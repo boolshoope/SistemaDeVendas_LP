@@ -1,8 +1,9 @@
 from time import strftime
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, messagebox
 
 from views.gui.adicionar import addProduto
+from views.gui import menu
 
 
 class Produtos:
@@ -10,10 +11,11 @@ class Produtos:
         top.geometry("1366x768")
         top.resizable(0, 0)
         top.title("Produtos")
+        top.protocol("WM_DELETE_WINDOW", X_windowsBtn_click)
 
         self.label1 = Label(mainLbl)
         self.label1.place(relx=0, rely=0, width=1366, height=768)
-        self.img = PhotoImage(file="imagens/gProdutos.png")
+        self.img = PhotoImage(file="public/imagens/gProdutos.png")
         self.label1.configure(image=self.img)
 
         self.message = Label(mainLbl, text="ADMIN")
@@ -74,11 +76,12 @@ class Produtos:
         self.btnDelProduto.configure(background="#023e8a", activebackground="#023e8a", foreground="#ffffff")
         self.btnDelProduto.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 12")
 
-        self.btnSair = Button(mainLbl, text="Sair")
+        self.btnSair = Button(mainLbl, text="Voltar")
         self.btnSair.place(relx=0.135, rely=0.885, width=76, height=23)
         self.btnSair.configure(relief="flat", overrelief="flat", borderwidth="0")
         self.btnSair.configure(background="#CF1E14", activebackground="#CF1E14", foreground="#ffffff")
         self.btnSair.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 12")
+        self.btnSair.configure(command=sair)
 
         self.scrollbarx = Scrollbar(mainLbl, orient=HORIZONTAL)
         self.scrollbary = Scrollbar(mainLbl, orient=VERTICAL)
@@ -135,6 +138,19 @@ class Produtos:
         self.clock.after(1000, self.time)
 
 
+def sair():
+    sure = messagebox.askyesno("Voltar", "Tem a certeza que deseja voltar?", parent=mainLbl)
+    if sure:
+        mainLbl.destroy()
+        menu.btnReVisible()
+
+
+def X_windowsBtn_click():
+    sure = messagebox.askyesno("Sair", "Tem a certeza que deseja fechar o programa?", parent=mainLbl)
+    if sure:
+        exit()
+
+
 def btnAddProdutos_click():
     # admMenu.withdraw()
     addProduto.callAddProdutos()
@@ -147,4 +163,3 @@ def callProdutos():
     page3 = Produtos(mainLbl)
     page3.time()
     mainLbl.mainloop()
-

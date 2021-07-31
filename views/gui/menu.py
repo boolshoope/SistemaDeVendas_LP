@@ -54,6 +54,13 @@ def btnProdutos_click():
     produtos.callProdutos()
 
 
-admMenu = Tk()
-page = AdminMenu(admMenu)
-admMenu.mainloop()
+def btnReVisible():
+    admMenu.deiconify()
+
+
+def start():
+    global admMenu
+    global page
+    admMenu = Tk()
+    page = AdminMenu(admMenu)
+    admMenu.mainloop()

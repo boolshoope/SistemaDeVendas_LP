@@ -11,7 +11,7 @@ class AddProduct:
 
         self.label1 = Label(p_add)
         self.label1.place(relx=0, rely=0, width=1366, height=768)
-        self.img = PhotoImage(file="imagens/addProduto.png")
+        self.img = PhotoImage(file="public/imagens/addProduto.png")
         self.label1.configure(image=self.img)
 
         self.labelTop = Label(p_add, text="Adicionar Produto")
@@ -56,8 +56,8 @@ class AddProduct:
         self.txtCodBarras.configure(font="-family {Poppins} -size 12", relief="flat")
         self.txtCodBarras.configure(validate="key", validatecommand=(self.r2, "%P"))
 
-        self.btnAdicionar = Button(p_add, text="ADD")
-        self.btnAdicionar.place(relx=0.408, rely=0.836, width=96, height=34)
+        self.btnAdicionar = Button(p_add, text="ADICIONAR")
+        self.btnAdicionar.place(x=535, rely=0.836, width=120, height=34)
         self.btnAdicionar.configure(relief="flat", overrelief="flat", borderwidth="0")
         self.btnAdicionar.configure(background="#CF1E14", activebackground="#CF1E14", foreground="#ffffff")
         self.btnAdicionar.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 14")

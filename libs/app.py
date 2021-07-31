@@ -1,6 +1,6 @@
 from views.gui import menu
 
 
-class App():
+class App:
     def __init__(self):
-        menu
+        menu.start()
