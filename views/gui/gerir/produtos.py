@@ -4,6 +4,7 @@ from tkinter import ttk, messagebox
 
 from views.gui.adicionar import addProduto
 from views.gui import menu
+from views.gui.editar import editProduto
 
 
 class Produtos:
@@ -64,7 +65,7 @@ class Produtos:
         self.btnAddProduto.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 12")
         self.btnAddProduto.configure(command=btnAddProdutos_click)
 
-        self.btnUpdProduto = Button(mainLbl, text="ACTUALIZAR PRODUTO")
+        self.btnUpdProduto = Button(mainLbl, text="ACTUALIZAR PRODUTO", command=self.btnUpdProdutos_click)
         self.btnUpdProduto.place(relx=0.052, rely=0.605, width=306, height=28)
         self.btnUpdProduto.configure(relief="flat", overrelief="flat", borderwidth="0")
         self.btnUpdProduto.configure(background="#023e8a", activebackground="#023e8a", foreground="#ffffff")
@@ -137,6 +138,9 @@ class Produtos:
         self.clock.config(text=string)
         self.clock.after(1000, self.time)
 
+    def btnUpdProdutos_click(self):
+        # admMenu.withdraw()
+        editProduto.callEditProdutos()
 
 def sair():
     sure = messagebox.askyesno("Voltar", "Tem a certeza que deseja voltar?", parent=mainLbl)
@@ -154,6 +158,9 @@ def X_windowsBtn_click():
 def btnAddProdutos_click():
     # admMenu.withdraw()
     addProduto.callAddProdutos()
+
+
+
 
 
 def callProdutos():
