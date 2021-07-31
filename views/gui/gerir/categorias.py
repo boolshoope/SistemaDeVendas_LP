@@ -2,21 +2,21 @@ from time import strftime
 from tkinter import *
 from tkinter import ttk, messagebox
 
-from views.gui.adicionar import addProduto
+from views.gui.adicionar import addCategoria
 from views.gui import menu
-from views.gui.editar import editProduto
+from views.gui.editar import editCategoria
 
 
-class Produtos:
+class Categorias:
     def __init__(self, top=None):
         top.geometry("1366x768")
         top.resizable(0, 0)
-        top.title("Produtos")
+        top.title("Categorias")
         top.protocol("WM_DELETE_WINDOW", X_windowsBtn_click)
 
         self.label1 = Label(mainLbl)
         self.label1.place(relx=0, rely=0, width=1366, height=768)
-        self.img = PhotoImage(file="public/imagens/gProdutos.png")
+        self.img = PhotoImage(file="public/imagens/gCategorias.png")
         self.label1.configure(image=self.img)
 
         self.message = Label(mainLbl, text="ADMIN")
@@ -40,13 +40,13 @@ class Produtos:
         self.txtNomeProduto.configure(font="-family {Poppins} -size 12")
         self.txtNomeProduto.configure(relief="flat")
 
-        self.btnProcurarId = Button(mainLbl, text="Procurar", command=self.btnProcurarIdProdutos_click)
+        self.btnProcurarId = Button(mainLbl, text="Procurar", command=self.btnProcurarIdCategorias_click)
         self.btnProcurarId.place(relx=0.229, rely=0.289, width=76, height=23)
         self.btnProcurarId.configure(relief="flat", overrelief="flat", borderwidth="0")
         self.btnProcurarId.configure(background="#023e8a", activebackground="#023e8a", foreground="#ffffff")
         self.btnProcurarId.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 12")
 
-        self.btnProcurarNome = Button(mainLbl, text="Procurar", command=self.btnProcurarNomeProdutos_click)
+        self.btnProcurarNome = Button(mainLbl, text="Procurar", command=self.btnProcurarNomeCategorias_click)
         self.btnProcurarNome.place(relx=0.229, rely=0.4, width=76, height=23)
         self.btnProcurarNome.configure(relief="flat", overrelief="flat", borderwidth="0")
         self.btnProcurarNome.configure(background="#023e8a", activebackground="#023e8a", foreground="#ffffff")
@@ -58,24 +58,24 @@ class Produtos:
         self.btnLogout.configure(background="#CF1E14", activebackground="#CF1E14", foreground="#ffffff")
         self.btnLogout.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 12")
 
-        self.btnAddProduto = Button(mainLbl, text="ADICIONAR PRODUTO")
-        self.btnAddProduto.place(relx=0.052, rely=0.535, width=306, height=28)
-        self.btnAddProduto.configure(relief="flat", overrelief="flat", borderwidth="0")
-        self.btnAddProduto.configure(background="#023e8a", activebackground="#023e8a", foreground="#ffffff")
-        self.btnAddProduto.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 12")
-        self.btnAddProduto.configure(command=btnAddProdutos_click)
+        self.btnAddCategoria = Button(mainLbl, text="ADICIONAR CATEGORIA")
+        self.btnAddCategoria.place(relx=0.052, rely=0.535, width=306, height=28)
+        self.btnAddCategoria.configure(relief="flat", overrelief="flat", borderwidth="0")
+        self.btnAddCategoria.configure(background="#023e8a", activebackground="#023e8a", foreground="#ffffff")
+        self.btnAddCategoria.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 12")
+        self.btnAddCategoria.configure(command=btnAddCategoria_click)
 
-        self.btnUpdProduto = Button(mainLbl, text="ACTUALIZAR PRODUTO", command=self.btnUpdProdutos_click)
-        self.btnUpdProduto.place(relx=0.052, rely=0.605, width=306, height=28)
-        self.btnUpdProduto.configure(relief="flat", overrelief="flat", borderwidth="0")
-        self.btnUpdProduto.configure(background="#023e8a", activebackground="#023e8a", foreground="#ffffff")
-        self.btnUpdProduto.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 12")
+        self.btnUpdCategoria = Button(mainLbl, text="ACTUALIZAR CATEGORIA", command=self.btnUpdCategoria_click)
+        self.btnUpdCategoria.place(relx=0.052, rely=0.605, width=306, height=28)
+        self.btnUpdCategoria.configure(relief="flat", overrelief="flat", borderwidth="0")
+        self.btnUpdCategoria.configure(background="#023e8a", activebackground="#023e8a", foreground="#ffffff")
+        self.btnUpdCategoria.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 12")
 
-        self.btnDelProduto = Button(mainLbl, text="REMOVER PRODUTO", command=self.btnDelProdutos_click)
-        self.btnDelProduto.place(relx=0.052, rely=0.675, width=306, height=28)
-        self.btnDelProduto.configure(relief="flat", overrelief="flat", borderwidth="0")
-        self.btnDelProduto.configure(background="#023e8a", activebackground="#023e8a", foreground="#ffffff")
-        self.btnDelProduto.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 12")
+        self.btnDelCategoria = Button(mainLbl, text="REMOVER CATEGORIA", command=self.btnDelCategoria_click)
+        self.btnDelCategoria.place(relx=0.052, rely=0.675, width=306, height=28)
+        self.btnDelCategoria.configure(relief="flat", overrelief="flat", borderwidth="0")
+        self.btnDelCategoria.configure(background="#023e8a", activebackground="#023e8a", foreground="#ffffff")
+        self.btnDelCategoria.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 12")
 
         self.btnSair = Button(mainLbl, text="Voltar", command=sair)
         self.btnSair.place(relx=0.135, rely=0.885, width=76, height=23)
@@ -102,25 +102,16 @@ class Produtos:
 
         self.tree.configure(
             columns=(
-                "idProduto",
-                "Nome",
-                "Preco",
-                "Stock",
-                "Categoria",
+                "idCategoria",
+                "Nome"
             )
         )
 
-        self.tree.heading("idProduto", text="idProduto", anchor=W)
+        self.tree.heading("idCategoria", text="idCategoria", anchor=W)
         self.tree.heading("Nome", text="Nome", anchor=W)
-        self.tree.heading("Preco", text="Preco", anchor=W)
-        self.tree.heading("Stock", text="Stock", anchor=W)
-        self.tree.heading("Categoria", text="Categoria", anchor=W)
 
         self.tree.column("#0", stretch=NO, minwidth=0, width=0)
         self.tree.column("#1", stretch=NO, minwidth=0, width=80)
-        self.tree.column("#2", stretch=NO, minwidth=0, width=260)
-        self.tree.column("#3", stretch=NO, minwidth=0, width=100)
-        self.tree.column("#4", stretch=NO, minwidth=0, width=120)
 
         # self.DisplayData()
 
@@ -137,17 +128,17 @@ class Produtos:
         self.clock.config(text=string)
         self.clock.after(1000, self.time)
 
-    def btnProcurarIdProdutos_click(self):
-        print("btnProcurarIdProdutos clicado")
+    def btnProcurarIdCategorias_click(self):
+        print("btnProcurarIdCategoria clicado")
 
-    def btnProcurarNomeProdutos_click(self):
-        print("btnProcurarNomeProdutos clicado")
+    def btnProcurarNomeCategorias_click(self):
+        print("btnProcurarNomeCategoria clicado")
 
-    def btnUpdProdutos_click(self):
-        editProduto.callEditProdutos()
+    def btnUpdCategoria_click(self):
+        editCategoria.callEditCategoria()
 
-    def btnDelProdutos_click(self):
-        print("btnDelProdutos clicado")
+    def btnDelCategoria_click(self):
+        print("btnDel clicado")
 
 
 def sair():
@@ -163,15 +154,14 @@ def X_windowsBtn_click():
         exit()
 
 
-def btnAddProdutos_click():
-    # admMenu.withdraw()
-    addProduto.callAddProdutos()
+def btnAddCategoria_click():
+    addCategoria.callAddCategoria()
 
 
-def callProdutos():
+def callCategorias():
     global mainLbl
     global page3
     mainLbl = Toplevel()
-    page3 = Produtos(mainLbl)
+    page3 = Categorias(mainLbl)
     page3.time()
     mainLbl.mainloop()

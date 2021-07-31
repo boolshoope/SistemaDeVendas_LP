@@ -7,7 +7,7 @@ class EditProduto:
     def __init__(self, top=None):
         top.geometry("1366x768")
         top.resizable(0, 0)
-        top.title("Adicionar Produto")
+        top.title("Actualizar Produto")
 
         self.label1 = Label(p_edit)
         self.label1.place(relx=0, rely=0, width=1366, height=768)

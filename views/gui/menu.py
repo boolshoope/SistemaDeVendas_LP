@@ -1,6 +1,6 @@
 from tkinter import *
 
-from views.gui.gerir import produtos
+from views.gui.gerir import produtos, categorias
 from views.gui.gerir import funcionarios
 
 
@@ -38,6 +38,7 @@ class AdminMenu:
         self.btnCategorias = Button(admMenu, image=self.imgBtnCategorias, bg='#3d8ea2', activebackground='#3d8ea2')
         self.btnCategorias.place(relx=0.536, rely=0.4, width=150, height=150)
         self.btnCategorias.configure(borderwidth="0", cursor="hand2")
+        self.btnCategorias.configure(command=btnCategorias_click)
 
         self.btnEstatisicas = Button(admMenu, text="Estatisticas")
         self.btnEstatisicas.place(relx=0.732, rely=0.508, width=150, height=150)
@@ -59,6 +60,11 @@ def btnProdutos_click():
 def btnFuncionarios_click():
     admMenu.withdraw()
     funcionarios.callFuncionarios()
+
+
+def btnCategorias_click():
+    admMenu.withdraw()
+    categorias.callCategorias()
 
 
 def btnReVisible():
