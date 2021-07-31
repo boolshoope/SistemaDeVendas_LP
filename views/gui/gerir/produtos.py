@@ -40,13 +40,13 @@ class Produtos:
         self.txtNomeProduto.configure(font="-family {Poppins} -size 12")
         self.txtNomeProduto.configure(relief="flat")
 
-        self.btnProcurarId = Button(mainLbl, text="Procurar")
+        self.btnProcurarId = Button(mainLbl, text="Procurar", command=self.btnProcurarIdProdutos_click)
         self.btnProcurarId.place(relx=0.229, rely=0.289, width=76, height=23)
         self.btnProcurarId.configure(relief="flat", overrelief="flat", borderwidth="0")
         self.btnProcurarId.configure(background="#023e8a", activebackground="#023e8a", foreground="#ffffff")
         self.btnProcurarId.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 12")
 
-        self.btnProcurarNome = Button(mainLbl, text="Procurar")
+        self.btnProcurarNome = Button(mainLbl, text="Procurar", command=self.btnProcurarNomeProdutos_click)
         self.btnProcurarNome.place(relx=0.229, rely=0.4, width=76, height=23)
         self.btnProcurarNome.configure(relief="flat", overrelief="flat", borderwidth="0")
         self.btnProcurarNome.configure(background="#023e8a", activebackground="#023e8a", foreground="#ffffff")
@@ -71,18 +71,17 @@ class Produtos:
         self.btnUpdProduto.configure(background="#023e8a", activebackground="#023e8a", foreground="#ffffff")
         self.btnUpdProduto.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 12")
 
-        self.btnDelProduto = Button(mainLbl, text="REMOVER PRODUTO")
+        self.btnDelProduto = Button(mainLbl, text="REMOVER PRODUTO", command=self.btnDelProdutos_click)
         self.btnDelProduto.place(relx=0.052, rely=0.675, width=306, height=28)
         self.btnDelProduto.configure(relief="flat", overrelief="flat", borderwidth="0")
         self.btnDelProduto.configure(background="#023e8a", activebackground="#023e8a", foreground="#ffffff")
         self.btnDelProduto.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 12")
 
-        self.btnSair = Button(mainLbl, text="Voltar")
+        self.btnSair = Button(mainLbl, text="Voltar", command=sair)
         self.btnSair.place(relx=0.135, rely=0.885, width=76, height=23)
         self.btnSair.configure(relief="flat", overrelief="flat", borderwidth="0")
         self.btnSair.configure(background="#CF1E14", activebackground="#CF1E14", foreground="#ffffff")
         self.btnSair.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 12")
-        self.btnSair.configure(command=sair)
 
         self.scrollbarx = Scrollbar(mainLbl, orient=HORIZONTAL)
         self.scrollbary = Scrollbar(mainLbl, orient=VERTICAL)
@@ -138,9 +137,18 @@ class Produtos:
         self.clock.config(text=string)
         self.clock.after(1000, self.time)
 
+    def btnProcurarIdProdutos_click(self):
+        print("btnProcurarIdProdutos clicado")
+
+    def btnProcurarNomeProdutos_click(self):
+        print("btnProcurarNomeProdutos clicado")
+
     def btnUpdProdutos_click(self):
-        # admMenu.withdraw()
         editProduto.callEditProdutos()
+
+    def btnDelProdutos_click(self):
+        print("btnDelProdutos clicado")
+
 
 def sair():
     sure = messagebox.askyesno("Voltar", "Tem a certeza que deseja voltar?", parent=mainLbl)
