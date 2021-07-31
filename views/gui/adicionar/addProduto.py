@@ -56,13 +56,13 @@ class AddProduct:
         self.txtCodBarras.configure(font="-family {Poppins} -size 12", relief="flat")
         self.txtCodBarras.configure(validate="key", validatecommand=(self.r2, "%P"))
 
-        self.btnAdicionar = Button(p_add, text="ADICIONAR")
+        self.btnAdicionar = Button(p_add, text="ADICIONAR", command=self.btnAdicionar_click)
         self.btnAdicionar.place(x=535, rely=0.836, width=120, height=34)
         self.btnAdicionar.configure(relief="flat", overrelief="flat", borderwidth="0")
         self.btnAdicionar.configure(background="#CF1E14", activebackground="#CF1E14", foreground="#ffffff")
         self.btnAdicionar.configure(cursor="hand2", font="-family {Poppins SemiBold} -size 14")
 
-        self.btnLimpar = Button(p_add, text='LIMPAR')
+        self.btnLimpar = Button(p_add, text='LIMPAR', command=self.btnLimpar_click)
         self.btnLimpar.place(relx=0.526, rely=0.836, width=86, height=34)
         self.btnLimpar.configure(relief="flat", overrelief="flat", borderwidth="0")
         self.btnLimpar.configure(background="#CF1E14", activebackground="#CF1E14", foreground="#ffffff")
@@ -79,6 +79,17 @@ class AddProduct:
         string = strftime("%H:%M:%S %p")
         self.clock.config(text=string)
         self.clock.after(1000, self.time)
+
+    def btnAdicionar_click(self):
+        print("btnAdicionar clicado")
+
+    def btnLimpar_click(self):
+        print("btnLimpar clicado")
+
+
+
+
+
 
 
 def callAddProdutos():
