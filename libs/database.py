@@ -23,14 +23,12 @@ class Database():
             categoria = query.fetchall()
 
             for cat in categoria:
-                print(cat)
                 print('nome'+cat[1])
                 print('descricao'+cat[2])
                 print('preco'+cat[3])
                 print('stock'+cat[4])
                 print('codBarras'+cat[5])
                 print('idCategoria'+cat[6])
-
 
         except ModuleNotFoundError:
             print("algo deu errado")
