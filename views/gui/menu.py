@@ -1,6 +1,7 @@
 from tkinter import *
 
 from views.gui.gerir import produtos
+from views.gui.gerir import funcionarios
 
 
 # Menu do adiministrador
@@ -31,6 +32,7 @@ class AdminMenu:
         self.btnEmpregados = Button(admMenu, image=self.imgBtnEmpregados, bg='#3d8ea2', activebackground='#3d8ea2')
         self.btnEmpregados.place(relx=0.338, rely=0.4, width=150, height=150)
         self.btnEmpregados.configure(borderwidth="0", cursor="hand2")
+        self.btnEmpregados.configure(command=btnFuncionarios_click)
 
         self.imgBtnCategorias = PhotoImage(file='public/imagens/btnCategorias.png')
         self.btnCategorias = Button(admMenu, image=self.imgBtnCategorias, bg='#3d8ea2', activebackground='#3d8ea2')
@@ -52,6 +54,11 @@ class AdminMenu:
 def btnProdutos_click():
     admMenu.withdraw()
     produtos.callProdutos()
+
+
+def btnFuncionarios_click():
+    admMenu.withdraw()
+    funcionarios.callFuncionarios()
 
 
 def btnReVisible():
