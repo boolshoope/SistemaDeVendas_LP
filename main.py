@@ -1,4 +1,4 @@
-from views.gui.adicionar import addProduto
+# from views.gui.adicionar import addProduto
 from libs import app
 # This is a sample Python script.
 
@@ -12,5 +12,5 @@ from libs import app
 #
 ##### Aplicação
 #
-addProduto.callAddProdutos()
+# addProduto.callAddProdutos()
 app.App()
