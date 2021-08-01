@@ -36,7 +36,7 @@ class Database:
         self.mydb.commit()
 
     def delete(self, tableName, id):
-        delete = "DELETE FROM {} WHERE product_id = ?".format(tableName)
+        delete = "DELETE FROM {} WHERE id{} = %s".format(tableName, tableName)
         cursor.execute(delete, [id])
         self.mydb.commit()
 

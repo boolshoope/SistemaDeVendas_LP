@@ -184,9 +184,10 @@ class Categorias:
             sure = messagebox.askyesno("Confirmar", "Tem a certeza que deseja remover?", parent=mainLbl)
             if sure:
                 id = int(self.tree.item(self.tree.focus())["values"][0])
-                database.db.delete("categoria", id)
+                database.db.delete("Categoria", id)
                 messagebox.showinfo("Sucesso!!", "Item removido da dase de dados.", parent=mainLbl)
                 self.sel.clear()
+                database.db.lerCategoria()
                 self.tree.delete(*self.tree.get_children())
                 self.DisplayData()
         else:

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="67b6d644-0ff8-4b2f-b5a8-66e8e76d39e6" name="Default Changelist" comment="Adicionar Categoria">
+    <list default="true" id="67b6d644-0ff8-4b2f-b5a8-66e8e76d39e6" name="Default Changelist" comment="Operacoes Categoria">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libs/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/libs/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/gui/gerir/categorias.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/gui/gerir/categorias.py" afterDir="false" />
@@ -389,7 +389,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627823716785</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Operacoes Categoria">
+      <created>1627824099693</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1627824099693</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -409,6 +416,7 @@
     <MESSAGE value="1st commit" />
     <MESSAGE value="tkinter" />
     <MESSAGE value="Adicionar Categoria" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adicionar Categoria" />
+    <MESSAGE value="Operacoes Categoria" />
+    <option name="LAST_COMMIT_MESSAGE" value="Operacoes Categoria" />
   </component>
 </project>
