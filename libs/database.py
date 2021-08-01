@@ -32,6 +32,7 @@ class Database:
         cursor.execute(insert, [int(idCateg), nome])
         self.mydb.commit()
 
+
 db = Database()
 db.conectar()
 cursor = db.mydb.cursor()
