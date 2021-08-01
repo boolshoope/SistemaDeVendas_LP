@@ -180,9 +180,17 @@ class Categorias:
         editCategoria.callEditCategoria(self.tree.item(self.tree.focus())["values"][0])
 
     def btnDelCategoria_click(self):
-        val = []
-        to_delete = []
-
+        if len(self.sel) != 0:
+            sure = messagebox.askyesno("Confirmar", "Tem a certeza que deseja remover?", parent=mainLbl)
+            if sure:
+                id = int(self.tree.item(self.tree.focus())["values"][0])
+                database.db.delete("categoria", id)
+                messagebox.showinfo("Sucesso!!", "Item removido da dase de dados.", parent=mainLbl)
+                self.sel.clear()
+                self.tree.delete(*self.tree.get_children())
+                self.DisplayData()
+        else:
+            messagebox.showerror("Erro!!", "Por favor, selecione um item na lista.", parent=mainLbl)
 
 
 def sair():

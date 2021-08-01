@@ -1,3 +1,5 @@
+from itertools import takewhile
+
 import mysql.connector
 
 from config import config
@@ -34,9 +36,9 @@ class Database:
         self.mydb.commit()
 
     def delete(self, tableName, id):
-        delete = "DELETE FROM raw_inventory WHERE product_id = ?"
-        cur.execute(delete, [k])
-        db.commit()
+        delete = "DELETE FROM {} WHERE product_id = ?".format(tableName)
+        cursor.execute(delete, [id])
+        self.mydb.commit()
 
 
 db = Database()
