@@ -12,11 +12,11 @@ import mysql.connector
 
 
 class Categorias:
-    def __init__(self, top=None):
-        top.geometry("1366x768")
-        top.resizable(0, 0)
-        top.title("Categorias")
-        top.protocol("WM_DELETE_WINDOW", X_windowsBtn_click)
+    def __init__(self):
+        mainLbl.geometry("1366x768")
+        mainLbl.resizable(0, 0)
+        mainLbl.title("Categorias")
+        mainLbl.protocol("WM_DELETE_WINDOW", X_windowsBtn_click)
 
         self.label1 = Label(mainLbl)
         self.label1.place(relx=0, rely=0, width=1366, height=768)
@@ -143,16 +143,19 @@ class Categorias:
             for j in self.tree.item(i)["values"]:
                 val.append(j)
 
-        for search in val:
-            if search == int(self.txtIdCategoria.get()):
-                self.tree.selection_set(val[val.index(search) - 1])
-                self.tree.focus(val[val.index(search) - 1])
-                messagebox.showinfo("Sucesso!!", "Id Categoria: {} encotrado.".format(self.txtIdCategoria.get()),
-                                    parent=mainLbl)
-                break
+        if self.txtIdCategoria.get() == "":
+            messagebox.showerror("Erro!!", "Id Categoria Invalido.", parent=mainLbl)
         else:
-            messagebox.showerror("Erro!!", "Id Categoria: {} não encontrado.".format(self.txtIdCategoria.get()),
-                                 parent=mainLbl)
+            for search in val:
+                if search == int(self.txtIdCategoria.get()):
+                    self.tree.selection_set(val[val.index(search) - 1])
+                    self.tree.focus(val[val.index(search) - 1])
+                    messagebox.showinfo("Sucesso!!", "Id Categoria: {} encotrado.".format(self.txtIdCategoria.get()),
+                                        parent=mainLbl)
+                    break
+            else:
+                messagebox.showerror("Erro!!", "Id Categoria: {} não encontrado.".format(self.txtIdCategoria.get()),
+                                     parent=mainLbl)
 
     def btnProcurarNomeCategorias_click(self):
         val = []
@@ -200,7 +203,7 @@ def callCategorias():
     global mainLbl
     global page3
     mainLbl = Toplevel()
-    page3 = Categorias(mainLbl)
+    page3 = Categorias()
     page3.time()
     mainLbl.mainloop()
 

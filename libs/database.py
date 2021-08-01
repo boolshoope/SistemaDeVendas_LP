@@ -14,13 +14,18 @@ class Database:
                                             port=config.PORT, database=config.DB)
 
     def lerBD(self):
-        cursor = self.mydb.cursor()
         cursor.execute('select * from categoria')
         categ = cursor.fetchall()
         for c in categ:
             lstCateg.append(Categoria(c[0], c[1]))
 
+    def updCateg(self, idCateg, nome):
+        update = "UPDATE categoria SET nome = %s WHERE idCategoria = %s"
+        cursor.execute(update, [nome, int(idCateg)])
+        self.mydb.commit()
+
 
 db = Database()
 db.conectar()
+cursor = db.mydb.cursor()
 db.lerBD()

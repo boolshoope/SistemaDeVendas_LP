@@ -58,7 +58,6 @@ class AddCategoria:
         print("btnAdicionar clicado")
 
     def btnLimpar_click(self):
-        self.txtIdCategoria.delete(0, END)
         self.txtNome.delete(0, END)
 
 

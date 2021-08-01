@@ -2,12 +2,9 @@ from time import strftime
 from tkinter import *
 from libs import database
 
+
 class EditCategoria:
     def __init__(self, idCateg):
-        #top.geometry("1366x768")
-        #top.resizable(0, 0)
-        #top.title("Actualizar Categoria")
-
         self.idCateg = idCateg
         p_add.title("Actualizar Categoria")
         p_add.geometry("1366x768")
@@ -68,10 +65,10 @@ class EditCategoria:
                 self.txtNome.insert(0, database.lstCateg[i].nome)
 
     def btnActualizar_click(self):
-        print("btnActualizar clicado")
+        nome = self.txtNome.get()
+        database.db.updCateg(int(self.txtIdCategoria.get()), nome)
 
     def btnLimpar_click(self):
-        self.txtIdCategoria.delete(0, END)
         self.txtNome.delete(0, END)
 
 
@@ -83,4 +80,3 @@ def callEditCategoria(idCateg):
     page3.time()
     page3.preencherTxt()
     p_add.mainloop()
-
