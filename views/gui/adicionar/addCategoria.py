@@ -59,9 +59,8 @@ class AddCategoria:
         self.clock.after(1000, self.time)
 
     def btnAdicionar_click(self):
-        idCateg = self.txtIdCategoria.get()
         nome = self.txtNome.get()
-        database.db.addCateg(idCateg, nome)
+        database.db.addCateg(nome)
         messagebox.showinfo("Sucesso!", "As informações foram adicionadas com sucesso.", parent=p_add)
         database.db.lerCategoria()
         categorias.updList()

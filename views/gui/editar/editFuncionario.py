@@ -43,7 +43,7 @@ class EditFuncionario:
         #self.txtQuantStock.configure(validate="key", validatecommand=(self.r2, "%P"))
 
         self.listCboSexo = ['Masculino', 'Feminino']
-        self.cboSexo = ttk.Combobox(p_edit, values=self.listCboSexo)
+        self.cboSexo = ttk.Combobox(p_edit, values=self.listCboSexo, state="readonly")
         self.cboSexo.place(x=178, y=389, width=190, height=30)
         self.cboSexo.configure(font="-family {Poppins} -size 12")
 
@@ -80,7 +80,7 @@ class EditFuncionario:
         self.txtPassword.configure(font="-family {Poppins} -size 12", relief="flat")
 
         self.listCboNivel = ['Administrador', 'Caixa']
-        self.cboNivel = ttk.Combobox(p_edit, values=self.listCboNivel)
+        self.cboNivel = ttk.Combobox(p_edit, values=self.listCboNivel, state="readonly")
         self.cboNivel.place(x=752, y=537, width=227, height=30)
         self.cboNivel.configure(font="-family {Poppins} -size 12")
 

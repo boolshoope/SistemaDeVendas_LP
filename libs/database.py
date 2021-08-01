@@ -43,9 +43,20 @@ class Database:
         self.lerFuncionario()
         self.lerLogin()
 
-    def addCateg(self, idCateg, nome):
-        insert = "INSERT INTO categoria(idCategoria, nome) VALUES(%s,%s)"
-        cursor.execute(insert, [int(idCateg), nome])
+    def addCateg(self, nome):
+        insert = "INSERT INTO categoria(nome) VALUES(,%s)"
+        cursor.execute(insert, [nome])
+        self.mydb.commit()
+
+    def addFunc(self, pNome, apelido, dataNascimento, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2):
+        insert = "INSERT INTO funcionario(pNome, apelido, dataNascimento, sexo, nrBI, bairro, nrCasa," \
+                 "quarteirao, tel1, tel2) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        cursor.execute(insert, [pNome, apelido, dataNascimento, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2])
+        self.mydb.commit()
+
+    def addLogin(self, username, password, nivel):
+        insert = "INSERT INTO login(username, password, nivel) VALUES(%s,%s,%s)"
+        cursor.execute(insert, [username, password, nivel])
         self.mydb.commit()
 
     def updCateg(self, idCateg, nome):

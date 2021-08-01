@@ -192,6 +192,12 @@ class Funcionario:
                     messagebox.showinfo("Sucesso!!", "Nome: {} encotrado.".format(self.txtNomeFuncionario.get()),
                                         parent=mainLbl)
                     break
+                if val.index(search)%2 == 0:
+                    self.tree.selection_set(val[val.index(search) - 2])
+                    self.tree.focus(val[val.index(search) - 2])
+                    messagebox.showinfo("Sucesso!!", "Nome: {} encotrado.".format(self.txtNomeFuncionario.get()),
+                                        parent=mainLbl)
+                    break
         else:
             messagebox.showerror("Erro!!", "Nome: {} não encontrado.".format(self.txtNomeFuncionario.get()),
                                  parent=mainLbl)
@@ -218,6 +224,10 @@ def X_windowsBtn_click():
 
 def btnAddProdutos_click():
     addFuncionario.callAddFuncionario()
+
+
+def updList():
+    page3.DisplayData()
 
 
 def callFuncionarios():

@@ -1,6 +1,10 @@
+from datetime import datetime
 from time import strftime
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, messagebox
+from tkcalendar import *
+from libs import database
+from views.gui.gerir import funcionarios
 
 
 class AddFuncionario:
@@ -40,16 +44,16 @@ class AddFuncionario:
         self.txtNome.configure(font="-family {Poppins} -size 12", relief="flat")
 
         self.r2 = p_add.register(self.testint)
-        #self.txtQuantStock.configure(validate="key", validatecommand=(self.r2, "%P"))
+        # self.txtQuantStock.configure(validate="key", validatecommand=(self.r2, "%P"))
 
         self.listCboSexo = ['Masculino', 'Feminino']
-        self.cboSexo = ttk.Combobox(p_add, values=self.listCboSexo)
+        self.cboSexo = ttk.Combobox(p_add, values=self.listCboSexo, state="readonly")
         self.cboSexo.place(x=178, y=389, width=190, height=30)
         self.cboSexo.configure(font="-family {Poppins} -size 12")
 
-        self.txtDataNasc = Entry(p_add)
+        self.txtDataNasc = DateEntry(p_add, date_pattern='dd/mm/y')
         self.txtDataNasc.place(x=407, y=389, width=227, height=30)
-        self.txtDataNasc.configure(font="-family {Poppins} -size 12", relief="flat")
+        self.txtDataNasc.configure(font="-family {Poppins} -size 12")
 
         self.txtTel1 = Entry(p_add)
         self.txtTel1.place(x=178, y=479, width=199, height=30)
@@ -80,7 +84,7 @@ class AddFuncionario:
         self.txtPassword.configure(font="-family {Poppins} -size 12", relief="flat")
 
         self.listCboNivel = ['Administrador', 'Caixa']
-        self.cboNivel = ttk.Combobox(p_add, values=self.listCboNivel)
+        self.cboNivel = ttk.Combobox(p_add, values=self.listCboNivel, state="readonly")
         self.cboNivel.place(x=752, y=537, width=227, height=30)
         self.cboNivel.configure(font="-family {Poppins} -size 12")
 
@@ -109,10 +113,45 @@ class AddFuncionario:
         self.clock.after(1000, self.time)
 
     def btnAdicionar_click(self):
-        print("btnAdicionar clicado")
+        pNome = self.txtNome.get()
+        apelido = self.txtApelido.get()
+        dataNasc = datetime.strptime(self.txtDataNasc.get(), "%d/%m/%Y").strftime('%Y-%m-%d')
+        sexo = ""
+        if self.cboSexo.get() == "Masculino":
+            sexo = 'M'
+        elif self.cboSexo.get() == "Feminino":
+            sexo = 'F'
+        nrBI = self.txtNrBI.get()
+        bairro = self.txtBairro.get()
+        nrCasa = self.txtNrCasa.get()
+        quarteirao = self.txtQuarteirao.get()
+        tel1 = self.txtTel1.get()
+        tel2 = self.txtTel2.get()
+
+        ### Login
+        username = self.txtUsername.get()
+        password = self.txtPassword.get()
+        nivel = self.cboNivel.get()
+
+        database.db.addFunc(pNome, apelido, dataNasc, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2)
+        database.db.addLogin(username, password, nivel)
+        messagebox.showinfo("Sucesso!", "As informações foram adicionadas com sucesso.", parent=p_add)
+        database.db.lerFuncionario()
+        database.db.lerLogin()
+        funcionarios.updList()
+        p_add.destroy()
 
     def btnLimpar_click(self):
-        print("btnLimpar clicado")
+        self.txtNome.delete(0, END)
+        self.txtApelido.delete(0, END)
+        self.txtNrBI.delete(0, END)
+        self.txtBairro.delete(0, END)
+        self.txtNrCasa.delete(0, END)
+        self.txtQuarteirao.delete(0, END)
+        self.txtTel1.delete(0, END)
+        self.txtTel2.delete(0, END)
+        self.txtUsername.delete(0, END)
+        self.txtPassword.delete(0, END)
 
 
 def callAddFuncionario():
@@ -122,4 +161,3 @@ def callAddFuncionario():
     page3 = AddFuncionario(p_add)
     page3.time()
     p_add.mainloop()
-
