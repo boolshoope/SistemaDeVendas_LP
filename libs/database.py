@@ -33,7 +33,10 @@ class Database:
         cursor.execute(insert, [int(idCateg), nome])
         self.mydb.commit()
 
-    #def delete(self, tableName, ):
+    def delete(self, tableName, id):
+        delete = "DELETE FROM raw_inventory WHERE product_id = ?"
+        cur.execute(delete, [k])
+        db.commit()
 
 
 db = Database()

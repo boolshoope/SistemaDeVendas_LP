@@ -182,25 +182,8 @@ class Categorias:
     def btnDelCategoria_click(self):
         val = []
         to_delete = []
-        """
-        if len(self.sel) != 0:
-            sure = messagebox.askyesno("Confirm", "Are you sure you want to delete selected products?", parent=mainLbl)
-            if sure:
-                id = self.tree.item(self.tree.focus())["values"][0]
 
-                for k in to_delete:
-                    delete = "DELETE FROM raw_inventory WHERE product_id = ?"
-                    cur.execute(delete, [k])
-                    db.commit()
 
-                messagebox.showinfo("Success!!", "Products deleted from database.", parent=inv)
-                self.sel.clear()
-                self.tree.delete(*self.tree.get_children())
-
-                self.DisplayData()
-        else:
-            messagebox.showerror("Error!!", "Please select a product.", parent=inv)
-        """
 
 def sair():
     sure = messagebox.askyesno("Voltar", "Tem a certeza que deseja voltar?", parent=mainLbl)
