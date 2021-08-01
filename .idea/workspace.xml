@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="67b6d644-0ff8-4b2f-b5a8-66e8e76d39e6" name="Default Changelist" comment="tkinter">
-      <change beforePath="$PROJECT_DIR$/.idea/SistemaDeVendas_LP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SistemaDeVendas_LP.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_7_30_2021_6_54_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_7_30_2021_6_54_PM__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/libs/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/gui/adicionar/addCategoria.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/gui/adicionar/addCategoria.py" afterDir="false" />
-    </list>
+    <list default="true" id="67b6d644-0ff8-4b2f-b5a8-66e8e76d39e6" name="Default Changelist" comment="Adicionar Categoria" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -350,7 +342,21 @@
       <option name="project" value="LOCAL" />
       <updated>1627782685743</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Adicionar Categoria">
+      <created>1627787156098</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1627787156098</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Adicionar Categoria">
+      <created>1627787167738</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1627787167738</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -369,6 +375,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="1st commit" />
     <MESSAGE value="tkinter" />
-    <option name="LAST_COMMIT_MESSAGE" value="tkinter" />
+    <MESSAGE value="Adicionar Categoria" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adicionar Categoria" />
   </component>
 </project>
