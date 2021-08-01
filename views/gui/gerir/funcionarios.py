@@ -203,7 +203,10 @@ class Funcionario:
                                  parent=mainLbl)
 
     def btnUpdFuncionario_click(self):
-        editFuncionario.callEditFuncionario(self.tree.item(self.tree.focus())["values"][0])
+        if len(self.sel) != 0:
+            editFuncionario.callEditFuncionario(self.tree.item(self.tree.focus())["values"][0])
+        else:
+            messagebox.showerror("Erro!!", "Por favor, selecione um item na lista.", parent=mainLbl)
 
     def btnDelFuncionario_click(self):
         if len(self.sel) != 0:

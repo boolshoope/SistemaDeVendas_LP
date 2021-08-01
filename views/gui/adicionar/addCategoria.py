@@ -26,12 +26,8 @@ class AddCategoria:
         self.clock.configure(font="-family {Poppins Light} -size 12")
         self.clock.configure(foreground="#000000", background="#ffffff")
 
-        self.txtIdCategoria = Entry(p_add)
-        self.txtIdCategoria.place(relx=0.132, rely=0.296, width=450, height=30)
-        self.txtIdCategoria.configure(font="-family {Poppins} -size 12", relief="flat")
-
         self.txtNome = Entry(p_add)
-        self.txtNome.place(relx=0.132, rely=0.413, width=450, height=30)
+        self.txtNome.place(relx=0.132, rely=0.296, width=450, height=30)
         self.txtNome.configure(font="-family {Poppins} -size 12", relief="flat")
 
         self.btnAdicionar = Button(p_add, text="ADICIONAR", command=self.btnAdicionar_click)

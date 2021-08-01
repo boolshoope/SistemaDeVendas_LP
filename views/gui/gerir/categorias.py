@@ -177,7 +177,10 @@ class Categorias:
                                  parent=mainLbl)
 
     def btnUpdCategoria_click(self):
-        editCategoria.callEditCategoria(self.tree.item(self.tree.focus())["values"][0])
+        if len(self.sel) != 0:
+            editCategoria.callEditCategoria(self.tree.item(self.tree.focus())["values"][0])
+        else:
+            messagebox.showerror("Erro!!", "Por favor, selecione um item na lista.", parent=mainLbl)
 
     def btnDelCategoria_click(self):
         if len(self.sel) != 0:

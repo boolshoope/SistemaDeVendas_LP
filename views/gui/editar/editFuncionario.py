@@ -30,10 +30,6 @@ class EditFuncionario:
         self.clock.configure(font="-family {Poppins Light} -size 12")
         self.clock.configure(foreground="#000000", background="#ffffff")
 
-        self.txtIdFuncionario = Entry(p_edit)
-        self.txtIdFuncionario.place(x=177, y=144, width=200, height=30)
-        self.txtIdFuncionario.configure(font="-family {Poppins} -size 12", relief="raised")
-
         self.txtNrBI = Entry(p_edit)
         self.txtNrBI.place(x=179, y=209, width=450, height=30)
         self.txtNrBI.configure(font="-family {Poppins} -size 12", relief="flat")
@@ -118,7 +114,6 @@ class EditFuncionario:
     def preencherTxt(self):
         for i in range(len(database.lstFunc)):
             if database.lstFunc[i].idFunc == self.idFunc:
-                self.txtIdFuncionario.insert(0, database.lstFunc[i].idFunc)
                 self.txtNome.insert(0, database.lstFunc[i].pNome)
                 self.txtApelido.insert(0, database.lstFunc[i].apelido)
                 dataNasc = datetime.strptime(str(database.lstFunc[i].dataNascimento), "%Y-%m-%d").strftime('%d/%m/%Y')

@@ -27,10 +27,6 @@ class AddFuncionario:
         self.clock.configure(font="-family {Poppins Light} -size 12")
         self.clock.configure(foreground="#000000", background="#ffffff")
 
-        self.txtIdFuncionario = Entry(p_add)
-        self.txtIdFuncionario.place(x=177, y=144, width=200, height=30)
-        self.txtIdFuncionario.configure(font="-family {Poppins} -size 12", relief="raised")
-
         self.txtNrBI = Entry(p_add)
         self.txtNrBI.place(x=179, y=209, width=450, height=30)
         self.txtNrBI.configure(font="-family {Poppins} -size 12", relief="flat")
