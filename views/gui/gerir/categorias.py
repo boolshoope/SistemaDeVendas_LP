@@ -128,6 +128,7 @@ class Categorias:
                 self.sel.append(i)
 
     def DisplayData(self):
+        self.tree.delete(*self.tree.get_children())
         for i in range(len(database.lstCateg)):
             self.tree.insert('', 'end', values=(database.lstCateg[i].idCateg, database.lstCateg[i].nome))
 
@@ -179,8 +180,27 @@ class Categorias:
         editCategoria.callEditCategoria(self.tree.item(self.tree.focus())["values"][0])
 
     def btnDelCategoria_click(self):
-        print("btnDel clicado")
+        val = []
+        to_delete = []
+        """
+        if len(self.sel) != 0:
+            sure = messagebox.askyesno("Confirm", "Are you sure you want to delete selected products?", parent=mainLbl)
+            if sure:
+                id = self.tree.item(self.tree.focus())["values"][0]
 
+                for k in to_delete:
+                    delete = "DELETE FROM raw_inventory WHERE product_id = ?"
+                    cur.execute(delete, [k])
+                    db.commit()
+
+                messagebox.showinfo("Success!!", "Products deleted from database.", parent=inv)
+                self.sel.clear()
+                self.tree.delete(*self.tree.get_children())
+
+                self.DisplayData()
+        else:
+            messagebox.showerror("Error!!", "Please select a product.", parent=inv)
+        """
 
 def sair():
     sure = messagebox.askyesno("Voltar", "Tem a certeza que deseja voltar?", parent=mainLbl)
@@ -197,6 +217,10 @@ def X_windowsBtn_click():
 
 def btnAddCategoria_click():
     addCategoria.callAddCategoria()
+
+
+def updList():
+    page3.DisplayData()
 
 
 def callCategorias():

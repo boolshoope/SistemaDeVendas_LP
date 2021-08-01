@@ -14,6 +14,7 @@ class Database:
                                             port=config.PORT, database=config.DB)
 
     def lerCategoria(self):
+        lstCateg.clear()
         cursor.execute('select * from categoria')
         categ = cursor.fetchall()
         for c in categ:
@@ -31,6 +32,8 @@ class Database:
         insert = "INSERT INTO categoria(idCategoria, nome) VALUES(%s,%s)"
         cursor.execute(insert, [int(idCateg), nome])
         self.mydb.commit()
+
+    #def delete(self, tableName, ):
 
 
 db = Database()

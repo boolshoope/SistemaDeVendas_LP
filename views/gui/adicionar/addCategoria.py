@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 
 from libs import database
+from views.gui.gerir import categorias
 
 
 class AddCategoria:
@@ -62,6 +63,8 @@ class AddCategoria:
         nome = self.txtNome.get()
         database.db.addCateg(idCateg, nome)
         messagebox.showinfo("Sucesso!", "As informações foram adicionadas com sucesso.", parent=p_add)
+        database.db.lerCategoria()
+        categorias.updList()
         p_add.destroy()
 
     def btnLimpar_click(self):

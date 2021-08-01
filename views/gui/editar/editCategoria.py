@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 
 from libs import database
+from views.gui.gerir import categorias
 
 
 class EditCategoria:
@@ -70,6 +71,8 @@ class EditCategoria:
         nome = self.txtNome.get()
         database.db.updCateg(int(self.txtIdCategoria.get()), nome)
         messagebox.showinfo("Sucesso!!", "As alterações foram efectuadas com sucesso.", parent=p_add)
+        database.db.lerCategoria()
+        categorias.updList()
         p_add.destroy()
 
     def btnLimpar_click(self):
