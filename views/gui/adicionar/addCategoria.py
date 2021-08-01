@@ -61,7 +61,7 @@ class AddCategoria:
         idCateg = self.txtIdCategoria.get()
         nome = self.txtNome.get()
         database.db.addCateg(idCateg, nome)
-        messagebox.showinfo("Sucesso!!", "As informações foram adicionadas com sucesso.", parent=p_add)
+        messagebox.showinfo("Sucesso!", "As informações foram adicionadas com sucesso.", parent=p_add)
         p_add.destroy()
 
     def btnLimpar_click(self):
