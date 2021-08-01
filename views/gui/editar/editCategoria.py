@@ -1,12 +1,17 @@
 from time import strftime
 from tkinter import *
-
+from libs import database
 
 class EditCategoria:
-    def __init__(self, top=None):
-        top.geometry("1366x768")
-        top.resizable(0, 0)
-        top.title("Actualizar Categoria")
+    def __init__(self, idCateg):
+        #top.geometry("1366x768")
+        #top.resizable(0, 0)
+        #top.title("Actualizar Categoria")
+
+        self.idCateg = idCateg
+        p_add.title("Actualizar Categoria")
+        p_add.geometry("1366x768")
+        p_add.resizable(0, 0)
 
         self.label1 = Label(p_add)
         self.label1.place(relx=0, rely=0, width=1366, height=768)
@@ -54,18 +59,28 @@ class EditCategoria:
         self.clock.config(text=string)
         self.clock.after(1000, self.time)
 
+    def preencherTxt(self):
+        for i in range(len(database.lstCateg)):
+            if database.lstCateg[i].idCateg == self.idCateg:
+                self.txtIdCategoria.delete(0, END)
+                self.txtIdCategoria.insert(0, database.lstCateg[i].idCateg)
+                self.txtNome.delete(0, END)
+                self.txtNome.insert(0, database.lstCateg[i].nome)
+
     def btnActualizar_click(self):
         print("btnActualizar clicado")
 
     def btnLimpar_click(self):
-        print("btnLimpar clicado")
+        self.txtIdCategoria.delete(0, END)
+        self.txtNome.delete(0, END)
 
 
-def callEditCategoria():
+def callEditCategoria(idCateg):
     global p_add
     global page3
     p_add = Toplevel()
-    page3 = EditCategoria(p_add)
+    page3 = EditCategoria(idCateg)
     page3.time()
+    page3.preencherTxt()
     p_add.mainloop()
 

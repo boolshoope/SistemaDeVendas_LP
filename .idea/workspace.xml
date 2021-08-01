@@ -5,16 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="67b6d644-0ff8-4b2f-b5a8-66e8e76d39e6" name="Default Changelist" comment="tkinter">
-      <change afterPath="$PROJECT_DIR$/public/imagens/addCategoria.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/imagens/gCategorias.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/gui/adicionar/addCategoria.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/gui/editar/editCategoria.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/gui/gerir/categorias.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs/objects.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/gui/adicionar/addProduto.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/gui/adicionar/addProduto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/gui/editar/editProduto.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/gui/editar/editProduto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/gui/gerir/produtos.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/gui/gerir/produtos.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/gui/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/gui/menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/libs/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/libs/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/gui/adicionar/addCategoria.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/gui/adicionar/addCategoria.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/gui/editar/editCategoria.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/gui/editar/editCategoria.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/gui/gerir/categorias.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/gui/gerir/categorias.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -332,7 +330,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627756827672</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="tkinter">
+      <created>1627761963548</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1627761963548</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -2,9 +2,13 @@ from time import strftime
 from tkinter import *
 from tkinter import ttk, messagebox
 
-from views.gui.adicionar import addCategoria
 from views.gui import menu
+from views.gui.adicionar import addCategoria
 from views.gui.editar import editCategoria
+from libs import database
+from libs.database import Database
+
+import mysql.connector
 
 
 class Categorias:
@@ -30,15 +34,15 @@ class Categorias:
         self.clock.configure(foreground="#000000")
         self.clock.configure(background="#ffffff")
 
-        self.txtIdProduto = Entry(mainLbl)
-        self.txtIdProduto.place(relx=0.040, rely=0.286, width=240, height=28)
-        self.txtIdProduto.configure(font="-family {Poppins} -size 12")
-        self.txtIdProduto.configure(relief="flat")
+        self.txtIdCategoria = Entry(mainLbl)
+        self.txtIdCategoria.place(relx=0.040, rely=0.286, width=240, height=28)
+        self.txtIdCategoria.configure(font="-family {Poppins} -size 12")
+        self.txtIdCategoria.configure(relief="flat")
 
-        self.txtNomeProduto = Entry(mainLbl)
-        self.txtNomeProduto.place(relx=0.040, rely=0.399, width=240, height=28)
-        self.txtNomeProduto.configure(font="-family {Poppins} -size 12")
-        self.txtNomeProduto.configure(relief="flat")
+        self.txtNome = Entry(mainLbl)
+        self.txtNome.place(relx=0.040, rely=0.399, width=240, height=28)
+        self.txtNome.configure(font="-family {Poppins} -size 12")
+        self.txtNome.configure(relief="flat")
 
         self.btnProcurarId = Button(mainLbl, text="Procurar", command=self.btnProcurarIdCategorias_click)
         self.btnProcurarId.place(relx=0.229, rely=0.289, width=76, height=23)
@@ -113,7 +117,7 @@ class Categorias:
         self.tree.column("#0", stretch=NO, minwidth=0, width=0)
         self.tree.column("#1", stretch=NO, minwidth=0, width=80)
 
-        # self.DisplayData()
+        self.DisplayData()
 
     sel = []
 
@@ -123,19 +127,53 @@ class Categorias:
             if i not in self.sel:
                 self.sel.append(i)
 
+    def DisplayData(self):
+        for i in range(len(database.lstCateg)):
+            self.tree.insert('', 'end', values=(database.lstCateg[i].idCateg, database.lstCateg[i].nome))
+
     def time(self):
         string = strftime("%H:%M:%S %p")
         self.clock.config(text=string)
         self.clock.after(1000, self.time)
 
     def btnProcurarIdCategorias_click(self):
-        print("btnProcurarIdCategoria clicado")
+        val = []
+        for i in self.tree.get_children():
+            val.append(i)
+            for j in self.tree.item(i)["values"]:
+                val.append(j)
+
+        for search in val:
+            if search == int(self.txtIdCategoria.get()):
+                self.tree.selection_set(val[val.index(search) - 1])
+                self.tree.focus(val[val.index(search) - 1])
+                messagebox.showinfo("Sucesso!!", "Id Categoria: {} encotrado.".format(self.txtIdCategoria.get()),
+                                    parent=mainLbl)
+                break
+        else:
+            messagebox.showerror("Erro!!", "Id Categoria: {} não encontrado.".format(self.txtIdCategoria.get()),
+                                 parent=mainLbl)
 
     def btnProcurarNomeCategorias_click(self):
-        print("btnProcurarNomeCategoria clicado")
+        val = []
+        for i in self.tree.get_children():
+            val.append(i)
+            for j in self.tree.item(i)["values"]:
+                val.append(j)
+
+        for search in val:
+            if search == self.txtNome.get():
+                self.tree.selection_set(val[val.index(search) - 2])
+                self.tree.focus(val[val.index(search) - 2])
+                messagebox.showinfo("Sucesso!!", "Nome: {} encotrado.".format(self.txtNome.get()),
+                                    parent=mainLbl)
+                break
+        else:
+            messagebox.showerror("Erro!!", "Nome: {} não encontrado.".format(self.txtNome.get()),
+                                 parent=mainLbl)
 
     def btnUpdCategoria_click(self):
-        editCategoria.callEditCategoria()
+        editCategoria.callEditCategoria(self.tree.item(self.tree.focus())["values"][0])
 
     def btnDelCategoria_click(self):
         print("btnDel clicado")
@@ -165,3 +203,12 @@ def callCategorias():
     page3 = Categorias(mainLbl)
     page3.time()
     mainLbl.mainloop()
+
+
+mycursor = database.db.mydb.cursor()
+mycursor.execute('select * from categoria')
+
+categ = mycursor.fetchall()
+for c in categ:
+    print('idCateg ' + str(c[0]))
+    print('nome ' + c[1])
