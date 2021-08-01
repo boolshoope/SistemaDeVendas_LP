@@ -1,5 +1,8 @@
 from time import strftime
 from tkinter import *
+from tkinter import messagebox
+
+from libs import database
 
 
 class AddCategoria:
@@ -55,7 +58,11 @@ class AddCategoria:
         self.clock.after(1000, self.time)
 
     def btnAdicionar_click(self):
-        print("btnAdicionar clicado")
+        idCateg = self.txtIdCategoria.get()
+        nome = self.txtNome.get()
+        database.db.addCateg(idCateg, nome)
+        messagebox.showinfo("Sucesso!!", "As informações foram adicionadas com sucesso.", parent=p_add)
+        p_add.destroy()
 
     def btnLimpar_click(self):
         self.txtNome.delete(0, END)
@@ -68,4 +75,3 @@ def callAddCategoria():
     page3 = AddCategoria(p_add)
     page3.time()
     p_add.mainloop()
-

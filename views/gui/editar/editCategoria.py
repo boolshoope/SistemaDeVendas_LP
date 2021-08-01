@@ -1,5 +1,7 @@
 from time import strftime
 from tkinter import *
+from tkinter import messagebox
+
 from libs import database
 
 
@@ -67,6 +69,8 @@ class EditCategoria:
     def btnActualizar_click(self):
         nome = self.txtNome.get()
         database.db.updCateg(int(self.txtIdCategoria.get()), nome)
+        messagebox.showinfo("Sucesso!!", "As alterações foram efectuadas com sucesso.", parent=p_add)
+        p_add.destroy()
 
     def btnLimpar_click(self):
         self.txtNome.delete(0, END)
