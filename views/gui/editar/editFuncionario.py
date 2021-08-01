@@ -1,11 +1,12 @@
 from datetime import datetime
 from time import strftime
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, messagebox
 
 from tkcalendar import DateEntry
 
 from libs import database
+from views.gui.gerir import funcionarios
 
 
 class EditFuncionario:
@@ -143,11 +144,45 @@ class EditFuncionario:
                         self.cboNivel.set(database.lstLogin[j].nivel)
 
     def btnActualizar_click(self):
-        print("btnActualizar clicado")
+        pNome = self.txtNome.get()
+        apelido = self.txtApelido.get()
+        dataNasc = datetime.strptime(self.txtDataNasc.get(), "%d/%m/%Y").strftime('%Y-%m-%d')
+        sexo = ""
+        if self.cboSexo.get() == "Masculino":
+            sexo = 'M'
+        elif self.cboSexo.get() == "Feminino":
+            sexo = 'F'
+        nrBI = self.txtNrBI.get()
+        bairro = self.txtBairro.get()
+        nrCasa = self.txtNrCasa.get()
+        quarteirao = self.txtQuarteirao.get()
+        tel1 = self.txtTel1.get()
+        tel2 = self.txtTel2.get()
+
+        ### Login
+        username = self.txtUsername.get()
+        password = self.txtPassword.get()
+        nivel = self.cboNivel.get()
+
+        database.db.updFunc(self.idFunc, pNome, apelido, dataNasc, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2)
+        database.db.updLogin(self.idFunc, username, password, nivel)
+        messagebox.showinfo("Sucesso!", "As informações foram actualizadas com sucesso.", parent=p_edit)
+        database.db.lerFuncionario()
+        database.db.lerLogin()
+        funcionarios.updList()
+        p_edit.destroy()
 
     def btnLimpar_click(self):
         self.txtNome.delete(0, END)
-        print("btnLimpar clicado")
+        self.txtApelido.delete(0, END)
+        self.txtNrBI.delete(0, END)
+        self.txtBairro.delete(0, END)
+        self.txtNrCasa.delete(0, END)
+        self.txtQuarteirao.delete(0, END)
+        self.txtTel1.delete(0, END)
+        self.txtTel2.delete(0, END)
+        self.txtUsername.delete(0, END)
+        self.txtPassword.delete(0, END)
 
 
 def callEditFuncionario(idFunc):
