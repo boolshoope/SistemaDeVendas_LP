@@ -2,6 +2,7 @@ from time import strftime
 from tkinter import *
 from tkinter import ttk, messagebox
 
+from libs import database
 from views.gui.adicionar import addFuncionario
 from views.gui import menu
 from views.gui.editar import editFuncionario
@@ -122,7 +123,7 @@ class Funcionario:
         self.tree.column("#3", stretch=NO, minwidth=0, width=100)
         self.tree.column("#4", stretch=NO, minwidth=0, width=120)
 
-        # self.DisplayData()
+        self.DisplayData()
 
     sel = []
 
@@ -132,16 +133,68 @@ class Funcionario:
             if i not in self.sel:
                 self.sel.append(i)
 
+    def DisplayData(self):
+        self.tree.delete(*self.tree.get_children())
+        for i in range(len(database.lstFunc)):
+            sexo = ""
+            nivel = ""
+            if database.lstFunc[i].sexo == 'M':
+                sexo = "Masculino"
+            elif database.lstFunc[i].sexo == 'F':
+                sexo = "Feminino"
+
+            for j in range(len(database.lstLogin)):
+                if database.lstFunc[i].idFunc == database.lstLogin[j].idFunc:
+                    nivel = database.lstLogin[j].nivel
+
+            self.tree.insert('', 'end', values=(database.lstFunc[i].idFunc, database.lstFunc[i].apelido, database.lstFunc[i].pNome,
+                                                sexo, nivel))
+
     def time(self):
         string = strftime("%H:%M:%S %p")
         self.clock.config(text=string)
         self.clock.after(1000, self.time)
 
     def btnProcurarIdFuncionario_click(self):
-        print("btnProcurarId clicado")
+        val = []
+        for i in self.tree.get_children():
+            val.append(i)
+            for j in self.tree.item(i)["values"]:
+                val.append(j)
+
+        if self.txtIdFuncionario.get() == "":
+            messagebox.showerror("Erro!!", "Id Funcionario Invalido.", parent=mainLbl)
+        else:
+            for search in val:
+                if search == int(self.txtIdFuncionario.get()):
+                    self.tree.selection_set(val[val.index(search) - 1])
+                    self.tree.focus(val[val.index(search) - 1])
+                    messagebox.showinfo("Sucesso!!", "Id Funcionario: {} encotrado.".format(self.txtIdFuncionario.get())
+                                        , parent=mainLbl)
+                    break
+            else:
+                messagebox.showerror("Erro!!", "Id Funcionario: {} não encontrado.".format(self.txtIdFuncionario.get()),
+                                     parent=mainLbl)
 
     def btnProcurarNomeFuncionario_click(self):
-        print("btnProcurarNome clicado")
+        val = []
+        for i in self.tree.get_children():
+            val.append(i)
+            for j in self.tree.item(i)["values"]:
+                val.append(j)
+
+        for search in val:
+            if search == self.txtNomeFuncionario.get():
+                print()
+                if val.index(search)%3 == 0:
+                    self.tree.selection_set(val[val.index(search) - 3])
+                    self.tree.focus(val[val.index(search) - 3])
+                    messagebox.showinfo("Sucesso!!", "Nome: {} encotrado.".format(self.txtNomeFuncionario.get()),
+                                        parent=mainLbl)
+                    break
+        else:
+            messagebox.showerror("Erro!!", "Nome: {} não encontrado.".format(self.txtNomeFuncionario.get()),
+                                 parent=mainLbl)
 
     def btnUpdFuncionario_click(self):
         editFuncionario.callEditFuncionario()

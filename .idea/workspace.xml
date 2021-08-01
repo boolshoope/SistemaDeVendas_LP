@@ -7,7 +7,9 @@
     <list default="true" id="67b6d644-0ff8-4b2f-b5a8-66e8e76d39e6" name="Default Changelist" comment="Operacoes Categoria">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libs/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/libs/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/libs/objects.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/gui/gerir/categorias.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/gui/gerir/categorias.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/gui/gerir/funcionarios.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/gui/gerir/funcionarios.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -396,7 +398,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627824099693</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Operacoes Categoria">
+      <created>1627824485027</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1627824485027</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

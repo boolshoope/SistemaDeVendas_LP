@@ -223,11 +223,3 @@ def callCategorias():
     page3.time()
     mainLbl.mainloop()
 
-
-mycursor = database.db.mydb.cursor()
-mycursor.execute('select * from categoria')
-
-categ = mycursor.fetchall()
-for c in categ:
-    print('idCateg ' + str(c[0]))
-    print('nome ' + c[1])
