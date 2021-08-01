@@ -44,7 +44,7 @@ class Database:
         self.lerLogin()
 
     def addCateg(self, nome):
-        insert = "INSERT INTO categoria(nome) VALUES(,%s)"
+        insert = "INSERT INTO categoria(nome) VALUES(%s)"
         cursor.execute(insert, [nome])
         self.mydb.commit()
 

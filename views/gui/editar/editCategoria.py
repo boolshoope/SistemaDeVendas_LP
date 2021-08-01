@@ -69,7 +69,7 @@ class EditCategoria:
 
     def btnActualizar_click(self):
         nome = self.txtNome.get()
-        database.db.updCateg(int(self.txtIdCategoria.get()), nome)
+        database.db.updCateg(self.idCateg.get(), nome)
         messagebox.showinfo("Sucesso!!", "As alterações foram efectuadas com sucesso.", parent=p_add)
         database.db.lerCategoria()
         categorias.updList()

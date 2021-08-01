@@ -203,7 +203,7 @@ class Funcionario:
                                  parent=mainLbl)
 
     def btnUpdFuncionario_click(self):
-        editFuncionario.callEditFuncionario()
+        editFuncionario.callEditFuncionario(self.tree.item(self.tree.focus())["values"][0])
 
     def btnDelFuncionario_click(self):
         print("btnDelete clicado")
