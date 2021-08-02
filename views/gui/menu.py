@@ -2,7 +2,7 @@ from tkinter import *
 
 from views.gui.gerir import produtos, categorias
 from views.gui.gerir import funcionarios
-
+from views.gui.gerir import visualizarVendas
 
 # Menu do adiministrador
 class AdminMenu:
@@ -40,11 +40,12 @@ class AdminMenu:
         self.btnCategorias.configure(borderwidth="0", cursor="hand2")
         self.btnCategorias.configure(command=btnCategorias_click)
 
-        self.btnEstatisicas = Button(admMenu, text="Estatisticas")
-        self.btnEstatisicas.place(relx=0.732, rely=0.508, width=150, height=150)
-        self.btnEstatisicas.configure(background="#ffffff", activebackground="#DEE2E6", borderwidth="0")
-        self.btnEstatisicas.configure(cursor="hand2")
-        self.btnEstatisicas.configure(font="-family {Calibri} -size 12")
+        self.btnVisualizarVendas = Button(admMenu, text="Visualizar Vendas")
+        self.btnVisualizarVendas.place(relx=0.732, rely=0.508, width=150, height=150)
+        self.btnVisualizarVendas.configure(background="#ffffff", activebackground="#DEE2E6", borderwidth="0")
+        self.btnVisualizarVendas.configure(cursor="hand2")
+        self.btnVisualizarVendas.configure(font="-family {Calibri} -size 12")
+        self.btnVisualizarVendas.configure(command=btnVisualizarVendas_click)
 
         self.imgBtnVendas = PhotoImage(file='public/imagens/btnVendas.png')
         self.btnVendas = Button(admMenu, image=self.imgBtnVendas, bg='#3d8ea2', activebackground='#3d8ea2')
@@ -70,6 +71,9 @@ def btnCategorias_click():
 def btnReVisible():
     admMenu.deiconify()
 
+def btnVisualizarVendas_click():
+    admMenu.withdraw()
+    visualizarVendas.callVendas()
 
 def start():
     global admMenu
