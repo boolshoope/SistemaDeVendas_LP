@@ -8,6 +8,6 @@ from libs import app
 #
 ##### Aplicação
 #
-#addFuncionario.callAddFuncionario()
+
 #login.callLogin()
 app.App()
