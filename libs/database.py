@@ -7,6 +7,7 @@ lstCateg = list()
 lstFunc = list()
 lstLogin = list()
 lstProd = list()
+lstVendas = list()
 
 
 class Database:
@@ -27,6 +28,13 @@ class Database:
         categ = cursor.fetchall()
         for c in categ:
             lstCateg.append(Categoria(c[0], c[1]))
+
+    def lerVendas(self):
+        lstVendas.clear()
+        cursor.execute('select * from venda')
+        venda = cursor.fetchall()
+        for v in venda:
+            lstVendas.append(Venda(v[0], v[1], v[2], v[3]))
 
     def lerFuncionario(self):
         lstFunc.clear()
@@ -54,6 +62,7 @@ class Database:
         self.lerFuncionario()
         self.lerLogin()
         self.lerProduto()
+        self.lerVendas()
 
     def addCateg(self, nome):
         insert = "INSERT INTO categoria(nome) VALUES(%s)"

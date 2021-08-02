@@ -3,6 +3,12 @@ class Categoria:
         self.idCateg = idCateg
         self.nome = nome
 
+class Venda:
+    def __init__(self, idVenda, data, preco, idFunc):
+        self.idVenda = idVenda
+        self.data = data
+        self.preco = preco
+        self.idFunc = idFunc
 
 class Funcionario:
     def __init__(self, idFunc, pNome, apelido, dataNascimento, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2):

@@ -10,7 +10,7 @@ HOST = 'localhost'
 USER = 'root'
 PASSWORD = ''
 PORT = 3306
-DB = 'lp'
+DB = 'vendas_lp'
 
 """
 HOST = str('sql303.epizy.com')
