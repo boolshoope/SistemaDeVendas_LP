@@ -1,4 +1,4 @@
-#from views.gui.adicionar import addFuncionario
+#from views.gui import login
 from libs import app
 # This is a sample Python script.
 
@@ -9,4 +9,5 @@ from libs import app
 ##### Aplicação
 #
 #addFuncionario.callAddFuncionario()
+#login.callLogin()
 app.App()
