@@ -122,12 +122,7 @@ class EditProduto:
         listCtg = self.cboCategoria.get()
 
         categ = None
-
-        for c in database.lstCateg:
-            if listCtg == c.nome:
-                categ = c.idCateg
-
-        database.db.updProd(self.idProd, nomePro, descricao, preco, qtdStock, codBarras, categ)
+        database.db.updProd(self.idProd, nomePro, descricao, preco, qtdStock, codBarras, listCtg)
         messagebox.showinfo("Sucesso!", "As informações foram adicionadas com sucesso.", parent=p_edit)
         database.db.lerProduto()
         produtos.updList()
