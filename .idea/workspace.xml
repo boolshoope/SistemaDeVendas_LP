@@ -370,13 +370,13 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.main" />
-      <item itemvalue="Python.main (1)" />
+      <item itemvalue="Python.addProduto" />
       <item itemvalue="Python.app" />
       <item itemvalue="Python.funcionarios" />
-      <item itemvalue="Python.produtos" />
+      <item itemvalue="Python.main (1)" />
+      <item itemvalue="Python.main" />
       <item itemvalue="Python.menu (1)" />
-      <item itemvalue="Python.addProduto" />
+      <item itemvalue="Python.produtos" />
     </list>
     <recent_temporary>
       <list>
@@ -702,14 +702,14 @@
     <entry file="file://$PROJECT_DIR$/views/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://C:/Python39/Lib/site-packages/mysql/connector/__init__.py">
+    <entry file="file://$PROJECT_DIR$/../../../../../Python39/Lib/site-packages/mysql/connector/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="821">
           <caret line="272" selection-start-line="272" selection-end-line="272" />
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Python39/Lib/site-packages/mysql/connector/connection.py">
+    <entry file="file://$PROJECT_DIR$/../../../../../Python39/Lib/site-packages/mysql/connector/connection.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="821">
           <caret line="71" selection-start-line="71" selection-end-line="71" />
@@ -740,7 +740,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Python39/Lib/site-packages/mysql/connector/connection_cext.py">
+    <entry file="file://$PROJECT_DIR$/../../../../../Python39/Lib/site-packages/mysql/connector/connection_cext.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
           <caret line="402" column="8" selection-start-line="402" selection-start-column="8" selection-end-line="402" selection-end-column="8" />
@@ -767,7 +767,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Python39/Lib/tkinter/__init__.py">
+    <entry file="file://$PROJECT_DIR$/../../../../../Python39/Lib/tkinter/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
           <caret line="3053" column="8" selection-start-line="3053" selection-start-column="8" selection-end-line="3053" selection-end-column="8" />
