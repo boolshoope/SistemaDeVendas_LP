@@ -116,7 +116,6 @@ class Database:
         self.mydb.commit()
 
 
-
 db = Database()
 db.conectar()
 cursor = db.mydb.cursor()
