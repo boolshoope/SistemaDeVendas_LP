@@ -48,7 +48,7 @@ class Database:
         cursor.execute('select * from produto')
         prod = cursor.fetchall()
         for p in prod:
-            lstProd.append(Produto(p[0], p[1], p[3], p[4], p[6]))
+            lstProd.append(Produto(p[0], p[1], p[3], p[4], p[6] ,p[2], p[5]))
 
     def lerLogin(self):
         lstLogin.clear()
@@ -64,6 +64,12 @@ class Database:
         self.lerProduto()
         self.lerVendas()
 
+    def addProd(self, nomePro, descricao, preco, qtdStock, codBarras, listCtg):
+        insert = "INSERT INTO produto(nome, descricao, preco, stock, codBarras, idCategoria) " \
+                 "VALUES(%s,%s,%s,%s,%s,%s)"
+        cursor.execute(insert, [nomePro, descricao, preco, qtdStock, codBarras, listCtg])
+        self.mydb.commit()
+
     def addCateg(self, nome):
         insert = "INSERT INTO categoria(nome) VALUES(%s)"
         cursor.execute(insert, [nome])
@@ -78,6 +84,12 @@ class Database:
     def addLogin(self, username, password, nivel):
         insert = "INSERT INTO login(username, password, nivel) VALUES(%s,%s,%s)"
         cursor.execute(insert, [username, password, nivel])
+        self.mydb.commit()
+
+    def updProd(self, idProd, nomePro, descricao, preco, qtdStock, codBarras, listCtg):
+        update = "UPDATE produto SET nome = %s, descricao = %s, preco = %s, stock = %s, codBarras = %s,"\
+                 "idCategoria = %s WHERE idProduto = %s"
+        cursor.execute(update, [nomePro, descricao, preco, qtdStock, codBarras, listCtg, int(idProd)])
         self.mydb.commit()
 
     def updCateg(self, idCateg, nome):

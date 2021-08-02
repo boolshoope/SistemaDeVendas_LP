@@ -34,9 +34,11 @@ class Login:
 
 
 class Produto:
-    def __init__(self, idProd, nomeProd, preco, stock, idCat):
+    def __init__(self, idProd, nomeProd, preco, stock, idCat, descricao, codBarras):
         self.idProd = idProd
         self.nomeProd = nomeProd
         self.preco = preco
         self.stock = stock
         self.idCat = idCat
+        self.descricao = descricao
+        self.codBarras = codBarras
