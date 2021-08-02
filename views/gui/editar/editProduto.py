@@ -99,19 +99,10 @@ class EditProduto:
                 self.txtQuantStock.insert(0, database.lstProd[i].stock)
                 self.txtCodBarras.insert(0, database.lstProd[i].codBarras)
 
-                categ = ""
-                if database.lstProd[i].idCat == 1:
-                    categ = "Sumos"
-                elif database.lstProd[i].idCat == 2:
-                    categ = "Pasta de Dentes"
-                elif database.lstProd[i].idCat == 3:
-                    categ = "Bebidas Alcolicas"
-                elif database.lstProd[i].idCat == 4:
-                    categ = "Doces"
-                elif database.lstProd[i].idCat == 5:
-                    categ = "Snacks"
+                for c in database.lstCateg:
+                    if database.lstProd[i].idCat == c.idCateg:
+                        self.cboCategoria.set(c.nome)
 
-                self.cboCategoria.set(categ)
 
     def btnActualizar_click(self):
         nomePro = self.txtNome.get()
@@ -122,7 +113,6 @@ class EditProduto:
         listCtg = self.cboCategoria.get()
 
         categ = None
-
         for c in database.lstCateg:
             if listCtg == c.nome:
                 categ = c.idCateg
