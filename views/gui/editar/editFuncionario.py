@@ -1,13 +1,20 @@
+from datetime import datetime
 from time import strftime
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, messagebox
+
+from tkcalendar import DateEntry
+
+from libs import database
+from views.gui.gerir import funcionarios
 
 
 class EditFuncionario:
-    def __init__(self, top=None):
-        top.geometry("1366x768")
-        top.resizable(0, 0)
-        top.title("Actualizar Funcionario")
+    def __init__(self, idFunc):
+        self.idFunc = idFunc
+        p_edit.geometry("1366x768")
+        p_edit.resizable(0, 0)
+        p_edit.title("Actualizar Funcionario")
 
         self.label1 = Label(p_edit)
         self.label1.place(relx=0, rely=0, width=1366, height=768)
@@ -22,10 +29,6 @@ class EditFuncionario:
         self.clock.place(relx=0.84, rely=0.065, width=102, height=36)
         self.clock.configure(font="-family {Poppins Light} -size 12")
         self.clock.configure(foreground="#000000", background="#ffffff")
-
-        self.txtIdFuncionario = Entry(p_edit)
-        self.txtIdFuncionario.place(x=177, y=144, width=200, height=30)
-        self.txtIdFuncionario.configure(font="-family {Poppins} -size 12", relief="raised")
 
         self.txtNrBI = Entry(p_edit)
         self.txtNrBI.place(x=179, y=209, width=450, height=30)
@@ -47,9 +50,9 @@ class EditFuncionario:
         self.cboSexo.place(x=178, y=389, width=190, height=30)
         self.cboSexo.configure(font="-family {Poppins} -size 12")
 
-        self.txtDataNasc = Entry(p_edit)
+        self.txtDataNasc = DateEntry(p_edit, date_pattern='dd/mm/y')
         self.txtDataNasc.place(x=407, y=389, width=227, height=30)
-        self.txtDataNasc.configure(font="-family {Poppins} -size 12", relief="flat")
+        self.txtDataNasc.configure(font="-family {Poppins} -size 12")
 
         self.txtTel1 = Entry(p_edit)
         self.txtTel1.place(x=178, y=479, width=199, height=30)
@@ -108,18 +111,81 @@ class EditFuncionario:
         self.clock.config(text=string)
         self.clock.after(1000, self.time)
 
+    def preencherTxt(self):
+        for i in range(len(database.lstFunc)):
+            if database.lstFunc[i].idFunc == self.idFunc:
+                self.txtNome.insert(0, database.lstFunc[i].pNome)
+                self.txtApelido.insert(0, database.lstFunc[i].apelido)
+                dataNasc = datetime.strptime(str(database.lstFunc[i].dataNascimento), "%Y-%m-%d").strftime('%d/%m/%Y')
+                self.txtDataNasc.delete(0, END)
+                self.txtDataNasc.insert(0, dataNasc)
+
+                sexo = ""
+                if database.lstFunc[i].sexo == "M":
+                    sexo = 'Masculino'
+                elif database.lstFunc[i].sexo == "F":
+                    sexo = 'Feminino'
+                self.cboSexo.set(sexo)
+                self.txtNrBI.insert(0, database.lstFunc[i].nrBI)
+                self.txtBairro.insert(0, database.lstFunc[i].bairro)
+                self.txtNrCasa.insert(0, database.lstFunc[i].nrCasa)
+                self.txtQuarteirao.insert(0, database.lstFunc[i].quarteirao)
+                self.txtTel1.insert(0, database.lstFunc[i].tel1)
+                self.txtTel2.insert(0, database.lstFunc[i].tel2)
+                for j in range(len(database.lstLogin)):
+                    if database.lstLogin[j].idFunc == self.idFunc:
+                        self.txtUsername.insert(0, database.lstLogin[j].username)
+                        self.txtPassword.insert(0, database.lstLogin[j].password)
+                        self.cboNivel.set(database.lstLogin[j].nivel)
+
     def btnActualizar_click(self):
-        print("btnActualizar clicado")
+        pNome = self.txtNome.get()
+        apelido = self.txtApelido.get()
+        dataNasc = datetime.strptime(self.txtDataNasc.get(), "%d/%m/%Y").strftime('%Y-%m-%d')
+        sexo = ""
+        if self.cboSexo.get() == "Masculino":
+            sexo = 'M'
+        elif self.cboSexo.get() == "Feminino":
+            sexo = 'F'
+        nrBI = self.txtNrBI.get()
+        bairro = self.txtBairro.get()
+        nrCasa = self.txtNrCasa.get()
+        quarteirao = self.txtQuarteirao.get()
+        tel1 = self.txtTel1.get()
+        tel2 = self.txtTel2.get()
+
+        ### Login
+        username = self.txtUsername.get()
+        password = self.txtPassword.get()
+        nivel = self.cboNivel.get()
+
+        database.db.updFunc(self.idFunc, pNome, apelido, dataNasc, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2)
+        database.db.updLogin(self.idFunc, username, password, nivel)
+        messagebox.showinfo("Sucesso!", "As informações foram actualizadas com sucesso.", parent=p_edit)
+        database.db.lerFuncionario()
+        database.db.lerLogin()
+        funcionarios.updList()
+        p_edit.destroy()
 
     def btnLimpar_click(self):
-        print("btnLimpar clicado")
+        self.txtNome.delete(0, END)
+        self.txtApelido.delete(0, END)
+        self.txtNrBI.delete(0, END)
+        self.txtBairro.delete(0, END)
+        self.txtNrCasa.delete(0, END)
+        self.txtQuarteirao.delete(0, END)
+        self.txtTel1.delete(0, END)
+        self.txtTel2.delete(0, END)
+        self.txtUsername.delete(0, END)
+        self.txtPassword.delete(0, END)
 
 
-def callEditFuncionario():
+def callEditFuncionario(idFunc):
     global p_edit
     global page3
     p_edit = Toplevel()
-    page3 = EditFuncionario(p_edit)
+    page3 = EditFuncionario(idFunc)
     page3.time()
+    page3.preencherTxt()
     p_edit.mainloop()
 

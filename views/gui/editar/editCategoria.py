@@ -27,12 +27,8 @@ class EditCategoria:
         self.clock.configure(font="-family {Poppins Light} -size 12")
         self.clock.configure(foreground="#000000", background="#ffffff")
 
-        self.txtIdCategoria = Entry(p_add)
-        self.txtIdCategoria.place(relx=0.132, rely=0.296, width=450, height=30)
-        self.txtIdCategoria.configure(font="-family {Poppins} -size 12", relief="flat")
-
         self.txtNome = Entry(p_add)
-        self.txtNome.place(relx=0.132, rely=0.413, width=450, height=30)
+        self.txtNome.place(relx=0.132, rely=0.296, width=450, height=30)
         self.txtNome.configure(font="-family {Poppins} -size 12", relief="flat")
 
         self.btnAdicionar = Button(p_add, text="ACTUALIZAR", command=self.btnActualizar_click)
@@ -62,14 +58,11 @@ class EditCategoria:
     def preencherTxt(self):
         for i in range(len(database.lstCateg)):
             if database.lstCateg[i].idCateg == self.idCateg:
-                self.txtIdCategoria.delete(0, END)
-                self.txtIdCategoria.insert(0, database.lstCateg[i].idCateg)
-                self.txtNome.delete(0, END)
                 self.txtNome.insert(0, database.lstCateg[i].nome)
 
     def btnActualizar_click(self):
         nome = self.txtNome.get()
-        database.db.updCateg(int(self.txtIdCategoria.get()), nome)
+        database.db.updCateg(self.idCateg, nome)
         messagebox.showinfo("Sucesso!!", "As alterações foram efectuadas com sucesso.", parent=p_add)
         database.db.lerCategoria()
         categorias.updList()

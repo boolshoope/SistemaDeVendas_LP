@@ -203,10 +203,25 @@ class Funcionario:
                                  parent=mainLbl)
 
     def btnUpdFuncionario_click(self):
-        editFuncionario.callEditFuncionario()
+        if len(self.sel) != 0:
+            editFuncionario.callEditFuncionario(self.tree.item(self.tree.focus())["values"][0])
+        else:
+            messagebox.showerror("Erro!!", "Por favor, selecione um item na lista.", parent=mainLbl)
 
     def btnDelFuncionario_click(self):
-        print("btnDelete clicado")
+        if len(self.sel) != 0:
+            sure = messagebox.askyesno("Confirmar", "Tem a certeza que deseja remover?", parent=mainLbl)
+            if sure:
+                id = int(self.tree.item(self.tree.focus())["values"][0])
+                database.db.delete("Funcionario", id)
+                messagebox.showinfo("Sucesso!!", "Item removido da dase de dados.", parent=mainLbl)
+                self.sel.clear()
+                database.db.lerFuncionario()
+                database.db.lerLogin()
+                self.tree.delete(*self.tree.get_children())
+                self.DisplayData()
+        else:
+            messagebox.showerror("Erro!!", "Por favor, selecione um item na lista.", parent=mainLbl)
 
 
 def sair():

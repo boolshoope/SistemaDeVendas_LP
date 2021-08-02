@@ -56,7 +56,7 @@ class Database:
         self.lerProduto()
 
     def addCateg(self, nome):
-        insert = "INSERT INTO categoria(nome) VALUES(,%s)"
+        insert = "INSERT INTO categoria(nome) VALUES(%s)"
         cursor.execute(insert, [nome])
         self.mydb.commit()
 
@@ -74,6 +74,17 @@ class Database:
     def updCateg(self, idCateg, nome):
         update = "UPDATE categoria SET nome = %s WHERE idCategoria = %s"
         cursor.execute(update, [nome, int(idCateg)])
+        self.mydb.commit()
+
+    def updFunc(self, idFunc, pNome, apelido, dataNascimento, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2):
+        update = "UPDATE funcionario SET pNome = %s, apelido = %s, dataNascimento = %s, sexo = %s, nrBI = %s, bairro = %s," \
+                 "nrCasa = %s, quarteirao = %s, tel1 = %s, tel2 = %s WHERE idFuncionario = %s"
+        cursor.execute(update, [pNome, apelido, dataNascimento, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2, int(idFunc)])
+        self.mydb.commit()
+
+    def updLogin(self, idFunc, username, password, nivel):
+        update = "UPDATE login SET username = %s, password = %s, nivel = %s WHERE idFuncionario = %s"
+        cursor.execute(update, [username, password, nivel, int(idFunc)])
         self.mydb.commit()
 
     def delete(self, tableName, id):
