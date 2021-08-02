@@ -2,7 +2,9 @@ from datetime import datetime
 from time import strftime
 from tkinter import *
 from tkinter import ttk, messagebox
+
 from tkcalendar import *
+
 from libs import database
 from views.gui.gerir import funcionarios
 
@@ -130,9 +132,9 @@ class AddFuncionario:
         nivel = self.cboNivel.get()
 
         database.db.addFunc(pNome, apelido, dataNasc, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2)
+        database.db.lerFuncionario()
         database.db.addLogin(username, password, nivel)
         messagebox.showinfo("Sucesso!", "As informações foram adicionadas com sucesso.", parent=p_add)
-        database.db.lerFuncionario()
         database.db.lerLogin()
         funcionarios.updList()
         p_add.destroy()

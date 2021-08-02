@@ -48,7 +48,7 @@ class Database:
         cursor.execute('select * from produto')
         prod = cursor.fetchall()
         for p in prod:
-            lstProd.append(Produto(p[0], p[1], p[3], p[4], p[6] ,p[2], p[5]))
+            lstProd.append(Produto(p[0], p[1], p[3], p[4], p[6], p[2], p[5]))
 
     def lerLogin(self):
         lstLogin.clear()
@@ -82,12 +82,13 @@ class Database:
         self.mydb.commit()
 
     def addLogin(self, username, password, nivel):
-        insert = "INSERT INTO login(username, password, nivel) VALUES(%s,%s,%s)"
-        cursor.execute(insert, [username, password, nivel])
+        id = lstFunc[len(lstFunc) - 1].idFunc
+        insert = "INSERT INTO login(idFuncionario, username, password, nivel) VALUES(%s,%s,%s,%s)"
+        cursor.execute(insert, [id,username, password, nivel])
         self.mydb.commit()
 
     def updProd(self, idProd, nomePro, descricao, preco, qtdStock, codBarras, listCtg):
-        update = "UPDATE produto SET nome = %s, descricao = %s, preco = %s, stock = %s, codBarras = %s,"\
+        update = "UPDATE produto SET nome = %s, descricao = %s, preco = %s, stock = %s, codBarras = %s," \
                  "idCategoria = %s WHERE idProduto = %s"
         cursor.execute(update, [nomePro, descricao, preco, qtdStock, codBarras, listCtg, int(idProd)])
         self.mydb.commit()
@@ -100,7 +101,8 @@ class Database:
     def updFunc(self, idFunc, pNome, apelido, dataNascimento, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2):
         update = "UPDATE funcionario SET pNome = %s, apelido = %s, dataNascimento = %s, sexo = %s, nrBI = %s, bairro = %s," \
                  "nrCasa = %s, quarteirao = %s, tel1 = %s, tel2 = %s WHERE idFuncionario = %s"
-        cursor.execute(update, [pNome, apelido, dataNascimento, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2, int(idFunc)])
+        cursor.execute(update, [pNome, apelido, dataNascimento, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2,
+                                int(idFunc)])
         self.mydb.commit()
 
     def updLogin(self, idFunc, username, password, nivel):
@@ -112,6 +114,7 @@ class Database:
         delete = "DELETE FROM {} WHERE id{} = %s".format(tableName, tableName)
         cursor.execute(delete, [id])
         self.mydb.commit()
+
 
 
 db = Database()
