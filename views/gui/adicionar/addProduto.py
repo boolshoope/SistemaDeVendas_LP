@@ -1,6 +1,9 @@
 from time import strftime
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, messagebox
+
+from libs import database
+from views.gui.gerir import produtos
 
 
 class AddProduto:
@@ -26,6 +29,7 @@ class AddProduto:
         self.txtIdProduto = Entry(p_add)
         self.txtIdProduto.place(relx=0.132, rely=0.296, width=450, height=30)
         self.txtIdProduto.configure(font="-family {Poppins} -size 12", relief="flat")
+        self.txtIdProduto.config(state=DISABLED)
 
         self.txtNome = Entry(p_add)
         self.txtNome.place(relx=0.132, rely=0.413, width=450, height=30)
@@ -46,8 +50,8 @@ class AddProduto:
         self.txtQuantStock.configure(font="-family {Poppins} -size 12", relief="flat")
         self.txtQuantStock.configure(validate="key", validatecommand=(self.r2, "%P"))
 
-        self.listCboCategoria=['Frutos', 'Sumos']
-        self.cboCategoria=ttk.Combobox(p_add, values=self.listCboCategoria)
+        self.listCboCategoria=['Sumos', 'Pasta de Dentes', 'Bebidas Alcolicas', 'Doces', 'Snacks']
+        self.cboCategoria=ttk.Combobox(p_add, values=self.listCboCategoria, state="readonly")
         self.cboCategoria.place(relx=0.527, rely=0.535, width=450, height=30)
         self.cboCategoria.configure(font="-family {Poppins} -size 12")
 
@@ -81,10 +85,37 @@ class AddProduto:
         self.clock.after(1000, self.time)
 
     def btnAdicionar_click(self):
-        print("btnAdicionar clicado")
+        #idProduto = self.txtIdProduto.get()
+        nomePro = self.txtNome.get()
+        descricao = self.txtDescricao.get()
+        preco = self.txtPreco.get()
+        qtdStock = self.txtQuantStock.get()
+        codBarras = self.txtCodBarras.get()
+        listCtg = self.cboCategoria.get()
+
+        categ = None
+        if listCtg == "Sumos": categ = 1
+        elif listCtg == "Pasta de Dentes": categ = 2
+        elif listCtg == "Bebidas Alcolicas": categ = 3
+        elif listCtg == "Doces": categ = 4
+        elif listCtg == "Snacks": categ = 5
+
+        database.db.addProd(nomePro, descricao, preco, qtdStock, codBarras, categ)
+        messagebox.showinfo("Sucesso!", "As informações foram adicionadas com sucesso.", parent=p_add)
+        database.db.lerProduto()
+        produtos.updList()
+        p_add.destroy()
 
     def btnLimpar_click(self):
-        print("btnLimpar clicado")
+        self.txtIdProduto.delete(0, END)
+        self.txtNome.delete(0, END)
+        self.txtDescricao.delete(0, END)
+        self.txtPreco.delete(0, END)
+        self.txtQuantStock.delete(0, END)
+        #self.listCboCategoria.delete(0, END)
+        #self.txtCodBarras.delete(0, END)
+
+
 
 
 def callAddProdutos():

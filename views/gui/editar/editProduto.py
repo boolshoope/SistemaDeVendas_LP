@@ -1,13 +1,17 @@
 from time import strftime
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, messagebox
+
+from libs import database
+from views.gui.gerir import produtos
 
 
 class EditProduto:
-    def __init__(self, top=None):
-        top.geometry("1366x768")
-        top.resizable(0, 0)
-        top.title("Actualizar Produto")
+    def __init__(self, idProd):
+        self.idProd = idProd
+        p_edit.geometry("1366x768")
+        p_edit.resizable(0, 0)
+        p_edit.title("Actualizar Produto")
 
         self.label1 = Label(p_edit)
         self.label1.place(relx=0, rely=0, width=1366, height=768)
@@ -26,6 +30,7 @@ class EditProduto:
         self.txtIdProduto = Entry(p_edit)
         self.txtIdProduto.place(relx=0.132, rely=0.296, width=450, height=30)
         self.txtIdProduto.configure(font="-family {Poppins} -size 12", relief="flat")
+
 
         self.txtNome = Entry(p_edit)
         self.txtNome.place(relx=0.132, rely=0.413, width=450, height=30)
@@ -46,7 +51,7 @@ class EditProduto:
         self.txtQuantStock.configure(font="-family {Poppins} -size 12", relief="flat")
         self.txtQuantStock.configure(validate="key", validatecommand=(self.r2, "%P"))
 
-        self.listCboCategoria=['Frutos', 'Sumos']
+        self.listCboCategoria=['Sumos', 'Pasta de Dentes', 'Bebidas Alcolicas', 'Doces', 'Snacks']
         self.cboCategoria=ttk.Combobox(p_edit, values=self.listCboCategoria)
         self.cboCategoria.place(relx=0.527, rely=0.535, width=450, height=30)
         self.cboCategoria.configure(font="-family {Poppins} -size 12")
@@ -80,18 +85,71 @@ class EditProduto:
         self.clock.config(text=string)
         self.clock.after(1000, self.time)
 
+    def preencherTxt(self):
+        for i in range(len(database.lstProd)):
+            if database.lstProd[i].idProd == self.idProd:
+                self.txtIdProduto.insert(0, database.lstProd[i].idProd)
+                self.txtNome.insert(0, database.lstProd[i].nomeProd)
+                self.txtDescricao.insert(0, database.lstProd[i].descricao)
+                self.txtPreco.insert(0, database.lstProd[i].preco)
+                self.txtQuantStock.insert(0, database.lstProd[i].stock)
+                self.txtCodBarras.insert(0, database.lstProd[i].codBarras)
+
+
+                categ = ""
+                if database.lstProd[i].idCat == 1:
+                    categ = "Sumos"
+                elif database.lstProd[i].idCat == 2:
+                    categ = "Pasta de Dentes"
+                elif database.lstProd[i].idCat == 3:
+                    categ = "Bebidas Alcolicas"
+                elif database.lstProd[i].idCat == 4:
+                    categ = "Doces"
+                elif database.lstProd[i].idCat == 5:
+                    categ = "Snacks"
+
+                self.cboCategoria.set(categ)
+
+
+
+
     def btnActualizar_click(self):
-        print("btnActualizar clicado")
+        nomePro = self.txtNome.get()
+        descricao = self.txtDescricao.get()
+        preco = self.txtPreco.get()
+        qtdStock = self.txtQuantStock.get()
+        codBarras = self.txtCodBarras.get()
+        listCtg = self.cboCategoria.get()
+
+        categ = None
+        if listCtg == "Sumos": categ = 1
+        elif listCtg == "Pasta de Dentes": categ = 2
+        elif listCtg == "Bebidas Alcolicas": categ = 3
+        elif listCtg == "Doces": categ = 4
+        elif listCtg == "Snacks": categ = 5
+
+        database.db.updProd(self.idProd, nomePro, descricao, preco, qtdStock, codBarras, listCtg)
+        messagebox.showinfo("Sucesso!", "As informações foram adicionadas com sucesso.", parent=p_edit)
+        database.db.lerProduto()
+        produtos.updList()
+        p_edit.destroy()
 
     def btnLimpar_click(self):
-        print("btnLimpar clicado")
+        self.txtIdProduto.delete(0, END)
+        self.txtNome.delete(0, END)
+        self.txtDescricao.delete(0, END)
+        self.txtPreco.delete(0, END)
+        self.txtQuantStock.delete(0, END)
+        # self.listCboCategoria.delete(0, END)
+        # self.txtCodBarras.delete(0, END)
 
 
-def callEditProdutos():
+def callEditProdutos(idProd):
     global p_edit
     global page3
     p_edit = Toplevel()
-    page3 = EditProduto(p_edit)
+    page3 = EditProduto(idProd)
     page3.time()
+    page3.preencherTxt()
     p_edit.mainloop()
 

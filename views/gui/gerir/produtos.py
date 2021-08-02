@@ -141,8 +141,27 @@ class Produtos:
                 database.lstProd[i].nomeProd,
                 database.lstProd[i].preco,
                 database.lstProd[i].stock,
-                database.lstProd[i].idCat
+                self.visualizarCategoriaProduto(i)
             ))
+
+    def visualizarCategoriaProduto(self, i):
+        categ = ""
+        if database.lstProd[i].idCat == 1:
+            categ = "Sumos"
+            return categ
+        elif database.lstProd[i].idCat == 2:
+            categ = "Pasta de Dentes"
+            return categ
+        elif database.lstProd[i].idCat == 3:
+            categ = "Bebidas Alcolicas"
+            return categ
+        elif database.lstProd[i].idCat == 4:
+            categ = "Doces"
+            return categ
+        elif database.lstProd[i].idCat == 5:
+            categ = "Snacks"
+            return categ
+
 
     def time(self):
         string = strftime("%H:%M:%S %p")
@@ -190,11 +209,22 @@ class Produtos:
                                  parent=mainLbl)
 
     def btnUpdProdutos_click(self):
-        editProduto.callEditProdutos()
+        if len(self.sel) != 0:
+            editProduto.callEditProdutos(self.tree.item(self.tree.focus())["values"][0])
+        else:
+            messagebox.showerror("Erro!!", "Por favor, selecione um item na lista.", parent=mainLbl)
 
     def btnDelProdutos_click(self):
         if len(self.sel) != 0:
-            print("BTCC")
+            sure = messagebox.askyesno("Confirmar", "Tem a certeza que deseja remover?", parent=mainLbl)
+            if sure:
+                id = int(self.tree.item(self.tree.focus())["values"][0])
+                database.db.delete("produto", id)
+                messagebox.showinfo("Sucesso!!", "Item removido da dase de dados.", parent=mainLbl)
+                self.sel.clear()
+                database.db.lerProduto()
+                self.tree.delete(*self.tree.get_children())
+                self.DisplayData()
         else:
             messagebox.showerror("Erro!!", "Por favor, selecione um item na lista.", parent=mainLbl)
 
@@ -213,9 +243,11 @@ def X_windowsBtn_click():
 
 
 def btnAddProdutos_click():
-    # admMenu.withdraw()
+    #admMenu.withdraw()
     addProduto.callAddProdutos()
 
+def updList():
+    page3.DisplayData()
 
 def callProdutos():
     global mainLbl
