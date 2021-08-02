@@ -21,6 +21,7 @@ class Database:
             database=config.DB
         )
 
+    ##### SELECT #####
     def lerCategoria(self):
         lstCateg.clear()
         cursor.execute('select * from categoria')
@@ -55,6 +56,7 @@ class Database:
         self.lerLogin()
         self.lerProduto()
 
+    ##### INSERT #####
     def addCateg(self, nome):
         insert = "INSERT INTO categoria(nome) VALUES(%s)"
         cursor.execute(insert, [nome])
@@ -71,6 +73,7 @@ class Database:
         cursor.execute(insert, [username, password, nivel])
         self.mydb.commit()
 
+    ##### UPDATE #####
     def updCateg(self, idCateg, nome):
         update = "UPDATE categoria SET nome = %s WHERE idCategoria = %s"
         cursor.execute(update, [nome, int(idCateg)])
@@ -87,6 +90,7 @@ class Database:
         cursor.execute(update, [username, password, nivel, int(idFunc)])
         self.mydb.commit()
 
+    ##### DELETE #####
     def delete(self, tableName, id):
         delete = "DELETE FROM {} WHERE id{} = %s".format(tableName, tableName)
         cursor.execute(delete, [id])
