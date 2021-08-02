@@ -50,7 +50,11 @@ class AddProduto:
         self.txtQuantStock.configure(font="-family {Poppins} -size 12", relief="flat")
         self.txtQuantStock.configure(validate="key", validatecommand=(self.r2, "%P"))
 
-        self.listCboCategoria=['Sumos', 'Pasta de Dentes', 'Bebidas Alcolicas', 'Doces', 'Snacks']
+        val = []
+        for i in database.lstCateg:
+            val.append(i.nome)
+
+        self.listCboCategoria=val
         self.cboCategoria=ttk.Combobox(p_add, values=self.listCboCategoria, state="readonly")
         self.cboCategoria.place(relx=0.527, rely=0.535, width=450, height=30)
         self.cboCategoria.configure(font="-family {Poppins} -size 12")
@@ -94,11 +98,9 @@ class AddProduto:
         listCtg = self.cboCategoria.get()
 
         categ = None
-        if listCtg == "Sumos": categ = 1
-        elif listCtg == "Pasta de Dentes": categ = 2
-        elif listCtg == "Bebidas Alcolicas": categ = 3
-        elif listCtg == "Doces": categ = 4
-        elif listCtg == "Snacks": categ = 5
+        for c in database.lstCateg:
+            if listCtg == c.nome:
+                categ = c.idCateg
 
         database.db.addProd(nomePro, descricao, preco, qtdStock, codBarras, categ)
         messagebox.showinfo("Sucesso!", "As informações foram adicionadas com sucesso.", parent=p_add)

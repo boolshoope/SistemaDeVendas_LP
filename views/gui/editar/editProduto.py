@@ -51,7 +51,11 @@ class EditProduto:
         self.txtQuantStock.configure(font="-family {Poppins} -size 12", relief="flat")
         self.txtQuantStock.configure(validate="key", validatecommand=(self.r2, "%P"))
 
-        self.listCboCategoria=['Sumos', 'Pasta de Dentes', 'Bebidas Alcolicas', 'Doces', 'Snacks']
+        val = []
+        for i in database.lstCateg:
+            val.append(i.nome)
+
+        self.listCboCategoria=val
         self.cboCategoria=ttk.Combobox(p_edit, values=self.listCboCategoria)
         self.cboCategoria.place(relx=0.527, rely=0.535, width=450, height=30)
         self.cboCategoria.configure(font="-family {Poppins} -size 12")
