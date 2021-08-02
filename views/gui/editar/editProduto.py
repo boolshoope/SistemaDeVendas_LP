@@ -100,7 +100,7 @@ class EditProduto:
                 self.txtCodBarras.insert(0, database.lstProd[i].codBarras)
 
                 for c in database.lstCateg:
-                    if i == c.idCateg:
+                    if database.lstProd[i].idCat == c.idCateg:
                         self.cboCategoria.set(c.nome)
 
 
