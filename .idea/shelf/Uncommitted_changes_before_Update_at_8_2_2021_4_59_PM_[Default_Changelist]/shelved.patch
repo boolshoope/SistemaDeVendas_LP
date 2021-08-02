@@ -1,0 +1,966 @@
+Index: .idea/SistemaDeVendas_LP.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"PYTHON_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\">\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <excludeFolder url=\"file://$MODULE_DIR$/venv\" />\r\n    </content>\r\n    <content url=\"file://$MODULE_DIR$/venv\" />\r\n    <orderEntry type=\"jdk\" jdkName=\"Python 3.7\" jdkType=\"Python SDK\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/SistemaDeVendas_LP.iml b/.idea/SistemaDeVendas_LP.iml
+--- a/.idea/SistemaDeVendas_LP.iml	(revision 4eb413ec48c38fc17615be37c8f198de4ddd7e27)
++++ b/.idea/SistemaDeVendas_LP.iml	(date 1627914174222)
+@@ -5,7 +5,7 @@
+       <excludeFolder url="file://$MODULE_DIR$/venv" />
+     </content>
+     <content url="file://$MODULE_DIR$/venv" />
+-    <orderEntry type="jdk" jdkName="Python 3.7" jdkType="Python SDK" />
++    <orderEntry type="inheritedJdk" />
+     <orderEntry type="sourceFolder" forTests="false" />
+   </component>
+ </module>
+\ No newline at end of file
+Index: views/gui/editar/editProduto.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from time import strftime\r\nfrom tkinter import *\r\nfrom tkinter import ttk, messagebox\r\n\r\nfrom libs import database\r\nfrom views.gui.gerir import produtos\r\n\r\n\r\nclass EditProduto:\r\n    def __init__(self, idProd):\r\n        self.idProd = idProd\r\n        p_edit.geometry(\"1366x768\")\r\n        p_edit.resizable(0, 0)\r\n        p_edit.title(\"Actualizar Produto\")\r\n\r\n        self.label1 = Label(p_edit)\r\n        self.label1.place(relx=0, rely=0, width=1366, height=768)\r\n        self.img = PhotoImage(file=\"public/imagens/addProduto.png\")\r\n        self.label1.configure(image=self.img)\r\n\r\n        self.labelTop = Label(p_edit, text=\"Actualizar Produto\")\r\n        self.labelTop.place(x=485, y=75, width=400, height=70)\r\n        self.labelTop.configure(font=\"-family {Poppins Bold} -size 31\", background=\"#ffffff\")\r\n\r\n        self.clock = Label(p_edit)\r\n        self.clock.place(relx=0.84, rely=0.065, width=102, height=36)\r\n        self.clock.configure(font=\"-family {Poppins Light} -size 12\")\r\n        self.clock.configure(foreground=\"#000000\", background=\"#ffffff\")\r\n\r\n        self.txtIdProduto = Entry(p_edit)\r\n        self.txtIdProduto.place(relx=0.132, rely=0.296, width=450, height=30)\r\n        self.txtIdProduto.configure(font=\"-family {Poppins} -size 12\", relief=\"flat\")\r\n\r\n\r\n        self.txtNome = Entry(p_edit)\r\n        self.txtNome.place(relx=0.132, rely=0.413, width=450, height=30)\r\n        self.txtNome.configure(font=\"-family {Poppins} -size 12\", relief=\"flat\")\r\n\r\n        self.r2 = p_edit.register(self.testint)\r\n\r\n        self.txtDescricao = Entry(p_edit)\r\n        self.txtDescricao.place(relx=0.132, rely=0.529, width=450, height=120)\r\n        self.txtDescricao.configure(font=\"-family {Poppins} -size 12\", relief=\"flat\")\r\n\r\n        self.txtPreco = Entry(p_edit)\r\n        self.txtPreco.place(relx=0.527, rely=0.296, width=450, height=30)\r\n        self.txtPreco.configure(font=\"-family {Poppins} -size 12\", relief=\"flat\")\r\n\r\n        self.txtQuantStock = Entry(p_edit)\r\n        self.txtQuantStock.place(relx=0.527, rely=0.413, width=450, height=30)\r\n        self.txtQuantStock.configure(font=\"-family {Poppins} -size 12\", relief=\"flat\")\r\n        self.txtQuantStock.configure(validate=\"key\", validatecommand=(self.r2, \"%P\"))\r\n\r\n        self.listCboCategoria=['Sumos', 'Pasta de Dentes', 'Bebidas Alcolicas', 'Doces', 'Snacks']\r\n        self.cboCategoria=ttk.Combobox(p_edit, values=self.listCboCategoria)\r\n        self.cboCategoria.place(relx=0.527, rely=0.535, width=450, height=30)\r\n        self.cboCategoria.configure(font=\"-family {Poppins} -size 12\")\r\n\r\n        self.txtCodBarras = Entry(p_edit)\r\n        self.txtCodBarras.place(relx=0.527, rely=0.646, width=450, height=30)\r\n        self.txtCodBarras.configure(font=\"-family {Poppins} -size 12\", relief=\"flat\")\r\n        self.txtCodBarras.configure(validate=\"key\", validatecommand=(self.r2, \"%P\"))\r\n\r\n        self.btnActualizar = Button(p_edit, text=\"ACTUALIZAR\", command=self.btnActualizar_click)\r\n        self.btnActualizar.place(x=535, rely=0.836, width=120, height=34)\r\n        self.btnActualizar.configure(relief=\"flat\", overrelief=\"flat\", borderwidth=\"0\")\r\n        self.btnActualizar.configure(background=\"#CF1E14\", activebackground=\"#CF1E14\", foreground=\"#ffffff\")\r\n        self.btnActualizar.configure(cursor=\"hand2\", font=\"-family {Poppins SemiBold} -size 14\")\r\n\r\n        self.btnLimpar = Button(p_edit, text='LIMPAR', command=self.btnLimpar_click)\r\n        self.btnLimpar.place(relx=0.526, rely=0.836, width=86, height=34)\r\n        self.btnLimpar.configure(relief=\"flat\", overrelief=\"flat\", borderwidth=\"0\")\r\n        self.btnLimpar.configure(background=\"#CF1E14\", activebackground=\"#CF1E14\", foreground=\"#ffffff\")\r\n        self.btnLimpar.configure(cursor=\"hand2\", font=\"-family {Poppins SemiBold} -size 14\")\r\n\r\n    def testint(self, val):\r\n        if val.isdigit():\r\n            return True\r\n        elif val == \"\":\r\n            return True\r\n        return False\r\n\r\n    def time(self):\r\n        string = strftime(\"%H:%M:%S %p\")\r\n        self.clock.config(text=string)\r\n        self.clock.after(1000, self.time)\r\n\r\n    def preencherTxt(self):\r\n        for i in range(len(database.lstProd)):\r\n            if database.lstProd[i].idProd == self.idProd:\r\n                self.txtIdProduto.insert(0, database.lstProd[i].idProd)\r\n                self.txtNome.insert(0, database.lstProd[i].nomeProd)\r\n                self.txtDescricao.insert(0, database.lstProd[i].descricao)\r\n                self.txtPreco.insert(0, database.lstProd[i].preco)\r\n                self.txtQuantStock.insert(0, database.lstProd[i].stock)\r\n                self.txtCodBarras.insert(0, database.lstProd[i].codBarras)\r\n\r\n\r\n                categ = \"\"\r\n                if database.lstProd[i].idCat == 1:\r\n                    categ = \"Sumos\"\r\n                elif database.lstProd[i].idCat == 2:\r\n                    categ = \"Pasta de Dentes\"\r\n                elif database.lstProd[i].idCat == 3:\r\n                    categ = \"Bebidas Alcolicas\"\r\n                elif database.lstProd[i].idCat == 4:\r\n                    categ = \"Doces\"\r\n                elif database.lstProd[i].idCat == 5:\r\n                    categ = \"Snacks\"\r\n\r\n                self.cboCategoria.set(categ)\r\n\r\n\r\n\r\n\r\n    def btnActualizar_click(self):\r\n        nomePro = self.txtNome.get()\r\n        descricao = self.txtDescricao.get()\r\n        preco = self.txtPreco.get()\r\n        qtdStock = self.txtQuantStock.get()\r\n        codBarras = self.txtCodBarras.get()\r\n        listCtg = self.cboCategoria.get()\r\n\r\n        categ = None\r\n        if listCtg == \"Sumos\": categ = 1\r\n        elif listCtg == \"Pasta de Dentes\": categ = 2\r\n        elif listCtg == \"Bebidas Alcolicas\": categ = 3\r\n        elif listCtg == \"Doces\": categ = 4\r\n        elif listCtg == \"Snacks\": categ = 5\r\n\r\n        database.db.updProd(self.idProd, nomePro, descricao, preco, qtdStock, codBarras, listCtg)\r\n        messagebox.showinfo(\"Sucesso!\", \"As informações foram adicionadas com sucesso.\", parent=p_edit)\r\n        database.db.lerProduto()\r\n        produtos.updList()\r\n        p_edit.destroy()\r\n\r\n    def btnLimpar_click(self):\r\n        self.txtIdProduto.delete(0, END)\r\n        self.txtNome.delete(0, END)\r\n        self.txtDescricao.delete(0, END)\r\n        self.txtPreco.delete(0, END)\r\n        self.txtQuantStock.delete(0, END)\r\n        # self.listCboCategoria.delete(0, END)\r\n        # self.txtCodBarras.delete(0, END)\r\n\r\n\r\ndef callEditProdutos(idProd):\r\n    global p_edit\r\n    global page3\r\n    p_edit = Toplevel()\r\n    page3 = EditProduto(idProd)\r\n    page3.time()\r\n    page3.preencherTxt()\r\n    p_edit.mainloop()\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/views/gui/editar/editProduto.py b/views/gui/editar/editProduto.py
+--- a/views/gui/editar/editProduto.py	(revision 4eb413ec48c38fc17615be37c8f198de4ddd7e27)
++++ b/views/gui/editar/editProduto.py	(date 1627914315334)
+@@ -128,7 +128,8 @@
+         elif listCtg == "Doces": categ = 4
+         elif listCtg == "Snacks": categ = 5
+ 
+-        database.db.updProd(self.idProd, nomePro, descricao, preco, qtdStock, codBarras, listCtg)
++        # database.db.updProd(self.idProd, nomePro, descricao, preco, qtdStock, codBarras, listCtg)
++        database.db.updProd(self.idProd, nomePro, descricao, preco, qtdStock, codBarras, categ)
+         messagebox.showinfo("Sucesso!", "As informações foram adicionadas com sucesso.", parent=p_edit)
+         database.db.lerProduto()
+         produtos.updList()
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"BookmarkManager\">\r\n    <bookmark url=\"file://$PROJECT_DIR$/libs/database.py\" line=\"82\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"67b6d644-0ff8-4b2f-b5a8-66e8e76d39e6\" name=\"Default Changelist\" comment=\"Visualizar produtos&#10;&#10;Signed-off-by: Isidro Bata &lt;bata.isidro@gmail.com&gt;\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/config/config.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/config/config.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/libs/database.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/libs/database.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/libs/objects.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/libs/objects.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/views/gui/adicionar/addProduto.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/views/gui/adicionar/addProduto.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/views/gui/editar/editProduto.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/views/gui/editar/editProduto.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/views/gui/gerir/produtos.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/views/gui/gerir/produtos.py\" afterDir=\"false\" />\r\n    </list>\r\n    <ignored path=\"C:\\Users\\kiDDing\\PycharmProjects\\SistemaDeVendas_LP\\.idea\\shelf/\" />\r\n    <ignored path=\"$PROJECT_DIR$/venv/\" />\r\n    <option name=\"EXCLUDED_CONVERTED_TO_IGNORED\" value=\"true\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"DockManager\">\r\n    <window id=\"1\">\r\n      <content type=\"file-editors\">\r\n        <state>\r\n          <leaf>\r\n            <file pinned=\"false\" current-in-tab=\"true\">\r\n              <entry file=\"file://$PROJECT_DIR$/views/gui/editar/editProduto.py\">\r\n                <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n                  <state relative-caret-position=\"702\">\r\n                    <caret line=\"107\" column=\"36\" lean-forward=\"true\" selection-start-line=\"97\" selection-start-column=\"16\" selection-end-line=\"107\" selection-end-column=\"36\" />\r\n                    <folding>\r\n                      <element signature=\"e#0#25#0\" expanded=\"true\" />\r\n                    </folding>\r\n                  </state>\r\n                </provider>\r\n              </entry>\r\n            </file>\r\n          </leaf>\r\n        </state>\r\n      </content>\r\n    </window>\r\n  </component>\r\n  <component name=\"FileEditorManager\">\r\n    <leaf>\r\n      <file pinned=\"false\" current-in-tab=\"false\">\r\n        <entry file=\"file://$PROJECT_DIR$/libs/database.py\">\r\n          <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n            <state relative-caret-position=\"456\">\r\n              <caret line=\"81\" column=\"56\" lean-forward=\"true\" selection-start-line=\"81\" selection-start-column=\"56\" selection-end-line=\"81\" selection-end-column=\"56\" />\r\n              <folding>\r\n                <element signature=\"e#0#22#0\" expanded=\"true\" />\r\n              </folding>\r\n            </state>\r\n          </provider>\r\n        </entry>\r\n      </file>\r\n      <file pinned=\"false\" current-in-tab=\"true\">\r\n        <entry file=\"file://$PROJECT_DIR$/config/config.py\">\r\n          <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n            <state relative-caret-position=\"486\">\r\n              <caret line=\"18\" column=\"28\" lean-forward=\"true\" selection-start-line=\"18\" selection-start-column=\"28\" selection-end-line=\"18\" selection-end-column=\"28\" />\r\n            </state>\r\n          </provider>\r\n        </entry>\r\n      </file>\r\n    </leaf>\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"PREVIOUS_COMMIT_AUTHORS\">\r\n      <list>\r\n        <option value=\"Isidro Bata &lt;bata.isidro@gmail.com&gt;\" />\r\n        <option value=\"bata.isidro@gmail.com\" />\r\n        <option value=\"Isidro-Bata\" />\r\n        <option value=\"#\" />\r\n      </list>\r\n    </option>\r\n    <option name=\"UPDATE_TYPE\" value=\"MERGE\" />\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"SIGN_OFF_COMMIT\" value=\"true\" />\r\n  </component>\r\n  <component name=\"IdeDocumentHistory\">\r\n    <option name=\"CHANGED_PATHS\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/views/gui/menu.py\" />\r\n        <option value=\"$PROJECT_DIR$/libs/app.py\" />\r\n        <option value=\"$PROJECT_DIR$/models/Inserir.py\" />\r\n        <option value=\"$PROJECT_DIR$/libs/model.py\" />\r\n        <option value=\"$PROJECT_DIR$/models/inserirModel.py\" />\r\n        <option value=\"$PROJECT_DIR$/main.py\" />\r\n        <option value=\"$PROJECT_DIR$/libs/objects.py\" />\r\n        <option value=\"$PROJECT_DIR$/views/gui/adicionar/addProduto.py\" />\r\n        <option value=\"$PROJECT_DIR$/views/gui/editar/editProduto.py\" />\r\n        <option value=\"$PROJECT_DIR$/libs/database.py\" />\r\n        <option value=\"$PROJECT_DIR$/views/gui/gerir/produtos.py\" />\r\n        <option value=\"$PROJECT_DIR$/config/config.py\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectFrameBounds\" extendedState=\"6\">\r\n    <option name=\"x\" value=\"-8\" />\r\n    <option name=\"y\" value=\"-8\" />\r\n    <option name=\"width\" value=\"1936\" />\r\n    <option name=\"height\" value=\"1056\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"1vrT5ONOqMTWm5X5qxIlg8wqYeI\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectView\">\r\n    <navigator proportions=\"\" version=\"1\">\r\n      <foldersAlwaysOnTop value=\"true\" />\r\n    </navigator>\r\n    <panes>\r\n      <pane id=\"Scope\" />\r\n      <pane id=\"ProjectPane\">\r\n        <subPane>\r\n          <expand>\r\n            <path>\r\n              <item name=\"SistemaDeVendas_LP\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"SistemaDeVendas_LP\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"SistemaDeVendas_LP\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"SistemaDeVendas_LP\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"config\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"SistemaDeVendas_LP\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"SistemaDeVendas_LP\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"libs\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"SistemaDeVendas_LP\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"SistemaDeVendas_LP\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"views\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"SistemaDeVendas_LP\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"SistemaDeVendas_LP\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"views\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"gui\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"SistemaDeVendas_LP\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"SistemaDeVendas_LP\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"views\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"gui\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"adicionar\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"SistemaDeVendas_LP\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"SistemaDeVendas_LP\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"views\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"gui\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"editar\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"SistemaDeVendas_LP\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"SistemaDeVendas_LP\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"views\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"gui\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"gerir\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n          </expand>\r\n          <select />\r\n        </subPane>\r\n      </pane>\r\n    </panes>\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"ASKED_ADD_EXTERNAL_FILES\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$/venv\" />\r\n    <property name=\"settings.editor.selected.configurable\" value=\"com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable\" />\r\n  </component>\r\n  <component name=\"PyConsoleOptionsProvider\">\r\n    <option name=\"myPythonConsoleState\">\r\n      <console-settings module-name=\"SistemaDeVendas_LP\" is-module-sdk=\"true\">\r\n        <option name=\"myUseModuleSdk\" value=\"true\" />\r\n        <option name=\"myModuleName\" value=\"SistemaDeVendas_LP\" />\r\n      </console-settings>\r\n    </option>\r\n  </component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\kiDDing\\PycharmProjects\\SistemaDeVendas_LP\\views\" />\r\n      <recent name=\"C:\\Users\\kiDDing\\PycharmProjects\\SistemaDeVendas_LP\\public\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunDashboard\">\r\n    <option name=\"ruleStates\">\r\n      <list>\r\n        <RuleState>\r\n          <option name=\"name\" value=\"ConfigurationTypeDashboardGroupingRule\" />\r\n        </RuleState>\r\n        <RuleState>\r\n          <option name=\"name\" value=\"StatusDashboardGroupingRule\" />\r\n        </RuleState>\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Python.main\">\r\n    <configuration name=\"addProduto\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\">\r\n      <module name=\"SistemaDeVendas_LP\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/views/gui/adicionar\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/views/gui/adicionar/addProduto.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"app\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\">\r\n      <module name=\"SistemaDeVendas_LP\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"C:\\Python39\\python.exe\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/libs\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/libs/app.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"funcionarios\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\">\r\n      <module name=\"SistemaDeVendas_LP\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/views/gui/gerir\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/views/gui/gerir/funcionarios.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"main (1)\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\r\n      <module name=\"SistemaDeVendas_LP\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/../Python-Music-Player-master\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/../Python-Music-Player-master/main.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"main\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\r\n      <module name=\"SistemaDeVendas_LP\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"C:\\Python39\\python.exe\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/main.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"menu (1)\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\">\r\n      <module name=\"SistemaDeVendas_LP\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/views/gui\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/views/gui/menu.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"produtos\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\">\r\n      <module name=\"SistemaDeVendas_LP\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/views/gui/gerir\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/views/gui/gerir/produtos.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <list>\r\n      <item itemvalue=\"Python.main\" />\r\n      <item itemvalue=\"Python.main (1)\" />\r\n      <item itemvalue=\"Python.app\" />\r\n      <item itemvalue=\"Python.funcionarios\" />\r\n      <item itemvalue=\"Python.produtos\" />\r\n      <item itemvalue=\"Python.menu (1)\" />\r\n      <item itemvalue=\"Python.addProduto\" />\r\n    </list>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Python.addProduto\" />\r\n        <item itemvalue=\"Python.menu (1)\" />\r\n        <item itemvalue=\"Python.produtos\" />\r\n        <item itemvalue=\"Python.funcionarios\" />\r\n        <item itemvalue=\"Python.app\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" BundledDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" Dictionaries=\"0\" CorrectionsLimit=\"5\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" />\r\n  <component name=\"SvnConfiguration\">\r\n    <configuration />\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"67b6d644-0ff8-4b2f-b5a8-66e8e76d39e6\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1627319024232</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1627319024232</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"1st commit\">\r\n      <created>1627330689454</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627330689454</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"tkinter\">\r\n      <created>1627333140991</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627333140991</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"tkinter\">\r\n      <created>1627333978704</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627333978704</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"tkinter\">\r\n      <created>1627505581628</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627505581628</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"tkinter\">\r\n      <created>1627505589613</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627505589613</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"tkinter\">\r\n      <created>1627509511229</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627509511229</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"tkinter\">\r\n      <created>1627510359516</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627510359516</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"tkinter\">\r\n      <created>1627510615937</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627510615937</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"tkinter\">\r\n      <created>1627510692737</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627510692737</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"tkinter\">\r\n      <created>1627510763579</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627510763579</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"tkinter\">\r\n      <created>1627510820132</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627510820132</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"tkinter\">\r\n      <created>1627510885356</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627510885356</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"tkinter\">\r\n      <created>1627515853040</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627515853040</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00014\" summary=\"tkinter\">\r\n      <created>1627532229841</created>\r\n      <option name=\"number\" value=\"00014\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00014\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627532229841</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00015\" summary=\"Pastas adicionadas:&#10;-config&#10; #Criação de um arquivo com constantes responsaveis por conectar a bd&#10;-libs&#10; #Criação da classe App entre outras...&#10;-models&#10;-public&#10;-views\">\r\n      <created>1627662960688</created>\r\n      <option name=\"number\" value=\"00015\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00015\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627662960688</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00016\" summary=\"Pastas adicionadas:&#10;-config&#10; #Criação de um arquivo com constantes responsaveis por conectar a bd&#10;-libs&#10; #Criação da classe App entre outras...&#10;-models&#10;-public&#10;-views\">\r\n      <created>1627663125735</created>\r\n      <option name=\"number\" value=\"00016\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00016\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627663125735</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00017\" summary=\"Pastas adicionadas:&#10;-config&#10; #Criação de um arquivo com constantes responsaveis por conectar a bd&#10;-libs&#10; #Criação da classe App entre outras...&#10;-models&#10;-public&#10;-views\">\r\n      <created>1627663352162</created>\r\n      <option name=\"number\" value=\"00017\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00017\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627663352162</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00018\" summary=\"Conexão com bd\">\r\n      <created>1627766329191</created>\r\n      <option name=\"number\" value=\"00018\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00018\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627766329191</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00019\" summary=\"Conexão com bd\">\r\n      <created>1627766356042</created>\r\n      <option name=\"number\" value=\"00019\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00019\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627766356042</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00020\" summary=\"Conexão com bd&#10;&#10;Signed-off-by: Isidro Bata &lt;bata.isidro@gmail.com&gt;\">\r\n      <created>1627766527079</created>\r\n      <option name=\"number\" value=\"00020\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00020\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627766527079</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00021\" summary=\"Visualizar produtos&#10;&#10;Signed-off-by: Isidro Bata &lt;bata.isidro@gmail.com&gt;\">\r\n      <created>1627863870438</created>\r\n      <option name=\"number\" value=\"00021\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00021\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627863870438</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00022\" summary=\"Visualizar produtos&#10;&#10;Signed-off-by: Isidro Bata &lt;bata.isidro@gmail.com&gt;\">\r\n      <created>1627864221301</created>\r\n      <option name=\"number\" value=\"00022\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00022\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1627864221301</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"23\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TodoView\">\r\n    <todo-panel id=\"selected-file\">\r\n      <is-autoscroll-to-source value=\"true\" />\r\n    </todo-panel>\r\n    <todo-panel id=\"all\">\r\n      <are-packages-shown value=\"true\" />\r\n      <is-autoscroll-to-source value=\"true\" />\r\n    </todo-panel>\r\n  </component>\r\n  <component name=\"ToolWindowManager\">\r\n    <frame x=\"-8\" y=\"-8\" width=\"1936\" height=\"1056\" extended-state=\"6\" />\r\n    <editor active=\"true\" />\r\n    <layout>\r\n      <window_info id=\"Favorites\" order=\"0\" side_tool=\"true\" />\r\n      <window_info active=\"true\" content_ui=\"combo\" id=\"Project\" order=\"1\" visible=\"true\" weight=\"0.1601686\" />\r\n      <window_info id=\"Structure\" order=\"2\" side_tool=\"true\" weight=\"0.25\" />\r\n      <window_info anchor=\"bottom\" id=\"Terminal\" order=\"0\" weight=\"0.2535211\" />\r\n      <window_info anchor=\"bottom\" id=\"Event Log\" order=\"1\" sideWeight=\"0.50052685\" side_tool=\"true\" weight=\"0.32936078\" />\r\n      <window_info anchor=\"bottom\" id=\"Python Console\" order=\"2\" />\r\n      <window_info anchor=\"bottom\" id=\"Message\" order=\"3\" />\r\n      <window_info anchor=\"bottom\" id=\"Find\" order=\"4\" />\r\n      <window_info anchor=\"bottom\" id=\"Version Control\" order=\"5\" weight=\"0.32936078\" />\r\n      <window_info anchor=\"bottom\" id=\"Run\" order=\"6\" sideWeight=\"0.49947312\" weight=\"0.32936078\" />\r\n      <window_info anchor=\"bottom\" id=\"Debug\" order=\"7\" weight=\"0.4\" />\r\n      <window_info anchor=\"bottom\" id=\"Cvs\" order=\"8\" weight=\"0.25\" />\r\n      <window_info anchor=\"bottom\" id=\"Inspection\" order=\"9\" weight=\"0.4\" />\r\n      <window_info anchor=\"bottom\" id=\"TODO\" order=\"10\" weight=\"0.32936078\" />\r\n      <window_info anchor=\"bottom\" id=\"Messages\" order=\"11\" sideWeight=\"0.49947312\" weight=\"0.32936078\" />\r\n      <window_info anchor=\"right\" id=\"Commander\" internal_type=\"SLIDING\" order=\"0\" type=\"SLIDING\" weight=\"0.4\" />\r\n      <window_info anchor=\"right\" id=\"Ant Build\" order=\"1\" weight=\"0.25\" />\r\n      <window_info anchor=\"right\" content_ui=\"combo\" id=\"Hierarchy\" order=\"2\" weight=\"0.25\" />\r\n    </layout>\r\n    <layout-to-restore>\r\n      <window_info id=\"Favorites\" order=\"0\" side_tool=\"true\" />\r\n      <window_info content_ui=\"combo\" id=\"Project\" order=\"1\" weight=\"0.1601686\" />\r\n      <window_info id=\"Structure\" order=\"2\" side_tool=\"true\" weight=\"0.25\" />\r\n      <window_info anchor=\"bottom\" id=\"Terminal\" order=\"0\" weight=\"0.32936078\" />\r\n      <window_info anchor=\"bottom\" id=\"Event Log\" order=\"1\" sideWeight=\"0.50052685\" side_tool=\"true\" weight=\"0.32936078\" />\r\n      <window_info anchor=\"bottom\" id=\"Python Console\" order=\"2\" />\r\n      <window_info anchor=\"bottom\" id=\"Message\" order=\"3\" />\r\n      <window_info anchor=\"bottom\" id=\"Find\" order=\"4\" />\r\n      <window_info anchor=\"bottom\" id=\"Version Control\" order=\"5\" weight=\"0.32936078\" />\r\n      <window_info anchor=\"bottom\" id=\"Run\" order=\"6\" sideWeight=\"0.49947312\" visible=\"true\" weight=\"0.32936078\" />\r\n      <window_info anchor=\"bottom\" id=\"Debug\" order=\"7\" weight=\"0.4\" />\r\n      <window_info anchor=\"bottom\" id=\"Cvs\" order=\"8\" weight=\"0.25\" />\r\n      <window_info anchor=\"bottom\" id=\"Inspection\" order=\"9\" weight=\"0.4\" />\r\n      <window_info anchor=\"bottom\" id=\"TODO\" order=\"10\" />\r\n      <window_info anchor=\"bottom\" id=\"Messages\" order=\"11\" sideWeight=\"0.49947312\" weight=\"0.32936078\" />\r\n      <window_info anchor=\"right\" id=\"Commander\" internal_type=\"SLIDING\" order=\"0\" type=\"SLIDING\" weight=\"0.4\" />\r\n      <window_info anchor=\"right\" id=\"Ant Build\" order=\"1\" weight=\"0.25\" />\r\n      <window_info anchor=\"right\" content_ui=\"combo\" id=\"Hierarchy\" order=\"2\" weight=\"0.25\" />\r\n    </layout-to-restore>\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"RECENTLY_FILTERED_USER_GROUPS\">\r\n                <collection />\r\n              </option>\r\n              <option name=\"RECENTLY_FILTERED_BRANCH_GROUPS\">\r\n                <collection />\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_FILTERS\">\r\n      <map>\r\n        <entry key=\"Branch\">\r\n          <value>\r\n            <list />\r\n          </value>\r\n        </entry>\r\n        <entry key=\"User\">\r\n          <value>\r\n            <list />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT\" value=\"true\" />\r\n    <MESSAGE value=\"1st commit\" />\r\n    <MESSAGE value=\"tkinter\" />\r\n    <MESSAGE value=\"Pastas adicionadas:&#10;-config&#10; #Criação de um arquivo com constantes responsaveis por conectar a bd&#10;-libs&#10; #Criação da classe App entre outras...&#10;-models&#10;-public&#10;-views\" />\r\n    <MESSAGE value=\"Conexão com bd\" />\r\n    <MESSAGE value=\"Conexão com bd&#10;&#10;Signed-off-by: Isidro Bata &lt;bata.isidro@gmail.com&gt;\" />\r\n    <MESSAGE value=\"Visualizar produtos&#10;&#10;Signed-off-by: Isidro Bata &lt;bata.isidro@gmail.com&gt;\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Visualizar produtos&#10;&#10;Signed-off-by: Isidro Bata &lt;bata.isidro@gmail.com&gt;\" />\r\n    <option name=\"OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT\" value=\"true\" />\r\n  </component>\r\n  <component name=\"editorHistoryManager\">\r\n    <entry file=\"file://$PROJECT_DIR$/public/imagens/btnCategorias.png\">\r\n      <provider selected=\"true\" editor-type-id=\"images\" />\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/public/imagens/btnEmpregados.png\">\r\n      <provider selected=\"true\" editor-type-id=\"images\" />\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/public/imagens/btnVendas.png\">\r\n      <provider selected=\"true\" editor-type-id=\"images\" />\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/public/imagens/menuBG.png\">\r\n      <provider selected=\"true\" editor-type-id=\"images\" />\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/public/imagens/shopping_cart.ico\">\r\n      <provider selected=\"true\" editor-type-id=\"images\" />\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/public/imagens/shopping_cart.png\">\r\n      <provider selected=\"true\" editor-type-id=\"images\" />\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/views/gui/adicionar/__init__.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\" />\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/views/gui/editar/__init__.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\" />\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/views/gui/gerir/__init__.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\" />\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/venv/Scripts/python.exe\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"-891\" />\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/views/gui/__init__.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\" />\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/BaseDeDados/__init__.py\" />\r\n    <entry file=\"file://$PROJECT_DIR$/objectos/__init__.py\" />\r\n    <entry file=\"file://$PROJECT_DIR$/views/__init__.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\" />\r\n    </entry>\r\n    <entry file=\"file://C:/Python39/Lib/site-packages/mysql/connector/__init__.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"821\">\r\n          <caret line=\"272\" selection-start-line=\"272\" selection-end-line=\"272\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://C:/Python39/Lib/site-packages/mysql/connector/connection.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"821\">\r\n          <caret line=\"71\" selection-start-line=\"71\" selection-end-line=\"71\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/libs/model.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"108\">\r\n          <caret line=\"4\" column=\"23\" selection-start-line=\"4\" selection-start-column=\"23\" selection-end-line=\"4\" selection-end-column=\"23\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/models/inserirModel.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"378\">\r\n          <caret line=\"14\" column=\"13\" lean-forward=\"true\" selection-start-line=\"14\" selection-start-column=\"13\" selection-end-line=\"14\" selection-end-column=\"13\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/libs/app.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"162\">\r\n          <caret line=\"6\" lean-forward=\"true\" selection-start-line=\"6\" selection-end-line=\"6\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/main.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"27\">\r\n          <caret line=\"1\" selection-start-line=\"1\" selection-end-line=\"1\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/views/gui/menu.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"1782\">\r\n          <caret line=\"66\" column=\"11\" lean-forward=\"true\" selection-start-line=\"66\" selection-start-column=\"11\" selection-end-line=\"66\" selection-end-column=\"11\" />\r\n          <folding>\r\n            <element signature=\"e#0#21#0\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://C:/Python39/Lib/site-packages/mysql/connector/connection_cext.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"299\">\r\n          <caret line=\"402\" column=\"8\" selection-start-line=\"402\" selection-start-column=\"8\" selection-end-line=\"402\" selection-end-column=\"8\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/views/gui/adicionar/addCategoria.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"1647\">\r\n          <caret line=\"61\" column=\"22\" selection-start-line=\"61\" selection-start-column=\"22\" selection-end-line=\"61\" selection-end-column=\"22\" />\r\n          <folding>\r\n            <element signature=\"e#0#25#0\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/views/gui/editar/editCategoria.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"382\">\r\n          <caret line=\"81\" column=\"20\" lean-forward=\"true\" selection-start-line=\"81\" selection-start-column=\"20\" selection-end-line=\"81\" selection-end-column=\"20\" />\r\n          <folding>\r\n            <element signature=\"e#0#25#0\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://C:/Python39/Lib/tkinter/__init__.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"313\">\r\n          <caret line=\"3053\" column=\"8\" selection-start-line=\"3053\" selection-start-column=\"8\" selection-end-line=\"3053\" selection-end-column=\"8\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/views/gui/gerir/categorias.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"308\">\r\n          <caret line=\"180\" column=\"17\" selection-start-line=\"180\" selection-start-column=\"17\" selection-end-line=\"180\" selection-end-column=\"17\" />\r\n          <folding>\r\n            <element signature=\"e#0#25#0\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/views/gui/adicionar/addProduto.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"324\">\r\n          <caret line=\"30\" column=\"8\" selection-start-line=\"30\" selection-start-column=\"8\" selection-end-line=\"30\" selection-end-column=\"8\" />\r\n          <folding>\r\n            <element signature=\"e#0#25#0\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/views/gui/adicionar/addFuncionario.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"-1734\">\r\n          <caret line=\"45\" column=\"84\" selection-start-line=\"45\" selection-start-column=\"68\" selection-end-line=\"45\" selection-end-column=\"84\" />\r\n          <folding>\r\n            <element signature=\"e#0#29#0\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/views/gui/gerir/funcionarios.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"351\">\r\n          <caret line=\"112\" lean-forward=\"true\" selection-start-line=\"112\" selection-end-line=\"112\" />\r\n          <folding>\r\n            <element signature=\"e#0#25#0\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/views/gui/editar/editFuncionario.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"2434\">\r\n          <caret line=\"188\" column=\"24\" lean-forward=\"true\" selection-start-line=\"188\" selection-start-column=\"4\" selection-end-line=\"188\" selection-end-column=\"24\" />\r\n          <folding>\r\n            <element signature=\"e#0#29#0\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/libs/objects.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"659\">\r\n          <caret line=\"36\" column=\"30\" selection-start-line=\"36\" selection-start-column=\"25\" selection-end-line=\"36\" selection-end-column=\"34\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/views/gui/editar/editProduto.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"702\">\r\n          <caret line=\"107\" column=\"36\" lean-forward=\"true\" selection-start-line=\"97\" selection-start-column=\"16\" selection-end-line=\"107\" selection-end-column=\"36\" />\r\n          <folding>\r\n            <element signature=\"e#0#25#0\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/views/gui/gerir/produtos.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"1567\">\r\n          <caret line=\"149\" column=\"42\" lean-forward=\"true\" selection-start-line=\"149\" selection-start-column=\"42\" selection-end-line=\"149\" selection-end-column=\"42\" />\r\n          <folding>\r\n            <element signature=\"e#0#25#0\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/libs/database.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"456\">\r\n          <caret line=\"81\" column=\"56\" lean-forward=\"true\" selection-start-line=\"81\" selection-start-column=\"56\" selection-end-line=\"81\" selection-end-column=\"56\" />\r\n          <folding>\r\n            <element signature=\"e#0#22#0\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/config/config.py\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"486\">\r\n          <caret line=\"18\" column=\"28\" lean-forward=\"true\" selection-start-line=\"18\" selection-start-column=\"28\" selection-end-line=\"18\" selection-end-column=\"28\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 4eb413ec48c38fc17615be37c8f198de4ddd7e27)
++++ b/.idea/workspace.xml	(date 1627914239022)
+@@ -3,74 +3,19 @@
+   <component name="AutoImportSettings">
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+-  <component name="BookmarkManager">
+-    <bookmark url="file://$PROJECT_DIR$/libs/database.py" line="82" />
+-  </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="67b6d644-0ff8-4b2f-b5a8-66e8e76d39e6" name="Default Changelist" comment="Visualizar produtos&#10;&#10;Signed-off-by: Isidro Bata &lt;bata.isidro@gmail.com&gt;">
++    <list default="true" id="67b6d644-0ff8-4b2f-b5a8-66e8e76d39e6" name="Default Changelist" comment="Operacoes Funcionario">
++      <change beforePath="$PROJECT_DIR$/.idea/SistemaDeVendas_LP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SistemaDeVendas_LP.iml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_2_2021_12_40_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_2_2021_12_40_PM__Default_Changelist_.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/config/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/libs/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/libs/database.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/libs/objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/libs/objects.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/views/gui/adicionar/addProduto.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/gui/adicionar/addProduto.py" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/views/gui/editar/editProduto.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/gui/editar/editProduto.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/views/gui/gerir/produtos.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/gui/gerir/produtos.py" afterDir="false" />
+     </list>
+-    <ignored path="C:\Users\kiDDing\PycharmProjects\SistemaDeVendas_LP\.idea\shelf/" />
+-    <ignored path="$PROJECT_DIR$/venv/" />
+-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
+-  <component name="DockManager">
+-    <window id="1">
+-      <content type="file-editors">
+-        <state>
+-          <leaf>
+-            <file pinned="false" current-in-tab="true">
+-              <entry file="file://$PROJECT_DIR$/views/gui/editar/editProduto.py">
+-                <provider selected="true" editor-type-id="text-editor">
+-                  <state relative-caret-position="702">
+-                    <caret line="107" column="36" lean-forward="true" selection-start-line="97" selection-start-column="16" selection-end-line="107" selection-end-column="36" />
+-                    <folding>
+-                      <element signature="e#0#25#0" expanded="true" />
+-                    </folding>
+-                  </state>
+-                </provider>
+-              </entry>
+-            </file>
+-          </leaf>
+-        </state>
+-      </content>
+-    </window>
+-  </component>
+-  <component name="FileEditorManager">
+-    <leaf>
+-      <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/libs/database.py">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="456">
+-              <caret line="81" column="56" lean-forward="true" selection-start-line="81" selection-start-column="56" selection-end-line="81" selection-end-column="56" />
+-              <folding>
+-                <element signature="e#0#22#0" expanded="true" />
+-              </folding>
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-      <file pinned="false" current-in-tab="true">
+-        <entry file="file://$PROJECT_DIR$/config/config.py">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="486">
+-              <caret line="18" column="28" lean-forward="true" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-    </leaf>
+-  </component>
+   <component name="FileTemplateManagerImpl">
+     <option name="RECENT_TEMPLATES">
+       <list>
+@@ -79,106 +24,19 @@
+     </option>
+   </component>
+   <component name="Git.Settings">
+-    <option name="PREVIOUS_COMMIT_AUTHORS">
+-      <list>
+-        <option value="Isidro Bata &lt;bata.isidro@gmail.com&gt;" />
+-        <option value="bata.isidro@gmail.com" />
+-        <option value="Isidro-Bata" />
+-        <option value="#" />
+-      </list>
+-    </option>
+-    <option name="UPDATE_TYPE" value="MERGE" />
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+-    <option name="SIGN_OFF_COMMIT" value="true" />
+   </component>
+-  <component name="IdeDocumentHistory">
+-    <option name="CHANGED_PATHS">
+-      <list>
+-        <option value="$PROJECT_DIR$/views/gui/menu.py" />
+-        <option value="$PROJECT_DIR$/libs/app.py" />
+-        <option value="$PROJECT_DIR$/models/Inserir.py" />
+-        <option value="$PROJECT_DIR$/libs/model.py" />
+-        <option value="$PROJECT_DIR$/models/inserirModel.py" />
+-        <option value="$PROJECT_DIR$/main.py" />
+-        <option value="$PROJECT_DIR$/libs/objects.py" />
+-        <option value="$PROJECT_DIR$/views/gui/adicionar/addProduto.py" />
+-        <option value="$PROJECT_DIR$/views/gui/editar/editProduto.py" />
+-        <option value="$PROJECT_DIR$/libs/database.py" />
+-        <option value="$PROJECT_DIR$/views/gui/gerir/produtos.py" />
+-        <option value="$PROJECT_DIR$/config/config.py" />
+-      </list>
+-    </option>
+-  </component>
+-  <component name="ProjectFrameBounds" extendedState="6">
+-    <option name="x" value="-8" />
+-    <option name="y" value="-8" />
+-    <option name="width" value="1936" />
+-    <option name="height" value="1056" />
++  <component name="GitSEFilterConfiguration">
++    <file-type-list>
++      <filtered-out-file-type name="LOCAL_BRANCH" />
++      <filtered-out-file-type name="REMOTE_BRANCH" />
++      <filtered-out-file-type name="TAG" />
++      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
++    </file-type-list>
+   </component>
+   <component name="ProjectId" id="1vrT5ONOqMTWm5X5qxIlg8wqYeI" />
+   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+     <ConfirmationsSetting value="2" id="Add" />
+-  </component>
+-  <component name="ProjectView">
+-    <navigator proportions="" version="1">
+-      <foldersAlwaysOnTop value="true" />
+-    </navigator>
+-    <panes>
+-      <pane id="Scope" />
+-      <pane id="ProjectPane">
+-        <subPane>
+-          <expand>
+-            <path>
+-              <item name="SistemaDeVendas_LP" type="b2602c69:ProjectViewProjectNode" />
+-              <item name="SistemaDeVendas_LP" type="462c0819:PsiDirectoryNode" />
+-            </path>
+-            <path>
+-              <item name="SistemaDeVendas_LP" type="b2602c69:ProjectViewProjectNode" />
+-              <item name="SistemaDeVendas_LP" type="462c0819:PsiDirectoryNode" />
+-              <item name="config" type="462c0819:PsiDirectoryNode" />
+-            </path>
+-            <path>
+-              <item name="SistemaDeVendas_LP" type="b2602c69:ProjectViewProjectNode" />
+-              <item name="SistemaDeVendas_LP" type="462c0819:PsiDirectoryNode" />
+-              <item name="libs" type="462c0819:PsiDirectoryNode" />
+-            </path>
+-            <path>
+-              <item name="SistemaDeVendas_LP" type="b2602c69:ProjectViewProjectNode" />
+-              <item name="SistemaDeVendas_LP" type="462c0819:PsiDirectoryNode" />
+-              <item name="views" type="462c0819:PsiDirectoryNode" />
+-            </path>
+-            <path>
+-              <item name="SistemaDeVendas_LP" type="b2602c69:ProjectViewProjectNode" />
+-              <item name="SistemaDeVendas_LP" type="462c0819:PsiDirectoryNode" />
+-              <item name="views" type="462c0819:PsiDirectoryNode" />
+-              <item name="gui" type="462c0819:PsiDirectoryNode" />
+-            </path>
+-            <path>
+-              <item name="SistemaDeVendas_LP" type="b2602c69:ProjectViewProjectNode" />
+-              <item name="SistemaDeVendas_LP" type="462c0819:PsiDirectoryNode" />
+-              <item name="views" type="462c0819:PsiDirectoryNode" />
+-              <item name="gui" type="462c0819:PsiDirectoryNode" />
+-              <item name="adicionar" type="462c0819:PsiDirectoryNode" />
+-            </path>
+-            <path>
+-              <item name="SistemaDeVendas_LP" type="b2602c69:ProjectViewProjectNode" />
+-              <item name="SistemaDeVendas_LP" type="462c0819:PsiDirectoryNode" />
+-              <item name="views" type="462c0819:PsiDirectoryNode" />
+-              <item name="gui" type="462c0819:PsiDirectoryNode" />
+-              <item name="editar" type="462c0819:PsiDirectoryNode" />
+-            </path>
+-            <path>
+-              <item name="SistemaDeVendas_LP" type="b2602c69:ProjectViewProjectNode" />
+-              <item name="SistemaDeVendas_LP" type="462c0819:PsiDirectoryNode" />
+-              <item name="views" type="462c0819:PsiDirectoryNode" />
+-              <item name="gui" type="462c0819:PsiDirectoryNode" />
+-              <item name="gerir" type="462c0819:PsiDirectoryNode" />
+-            </path>
+-          </expand>
+-          <select />
+-        </subPane>
+-      </pane>
+-    </panes>
+   </component>
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+@@ -188,7 +46,7 @@
+     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+-    <property name="last_opened_file_path" value="$PROJECT_DIR$/venv" />
++    <property name="last_opened_file_path" value="$PROJECT_DIR$/views/gui/editar" />
+     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+   </component>
+   <component name="PyConsoleOptionsProvider">
+@@ -200,25 +58,14 @@
+     </option>
+   </component>
+   <component name="RecentsManager">
+-    <key name="MoveFile.RECENT_KEYS">
+-      <recent name="C:\Users\kiDDing\PycharmProjects\SistemaDeVendas_LP\views" />
+-      <recent name="C:\Users\kiDDing\PycharmProjects\SistemaDeVendas_LP\public" />
++    <key name="CopyFile.RECENT_KEYS">
++      <recent name="C:\Users\isacl\Documents\PycharmProjects\SistemaDeVendas_LP\views\gui\editar" />
++      <recent name="C:\Users\isacl\Documents\PycharmProjects\SistemaDeVendas_LP\views\gui\adicionar" />
++      <recent name="C:\Users\isacl\Documents\PycharmProjects\SistemaDeVendas_LP\views\gui\gerir" />
+     </key>
+-  </component>
+-  <component name="RunDashboard">
+-    <option name="ruleStates">
+-      <list>
+-        <RuleState>
+-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+-        </RuleState>
+-        <RuleState>
+-          <option name="name" value="StatusDashboardGroupingRule" />
+-        </RuleState>
+-      </list>
+-    </option>
+   </component>
+   <component name="RunManager" selected="Python.main">
+-    <configuration name="addProduto" type="PythonConfigurationType" factoryName="Python" temporary="true">
++    <configuration name="ButtonOverImage" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+       <module name="SistemaDeVendas_LP" />
+       <option name="INTERPRETER_OPTIONS" value="" />
+       <option name="PARENT_ENVS" value="true" />
+@@ -226,32 +73,11 @@
+         <env name="PYTHONUNBUFFERED" value="1" />
+       </envs>
+       <option name="SDK_HOME" value="" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/views/gui/adicionar" />
+-      <option name="IS_MODULE_SDK" value="true" />
+-      <option name="ADD_CONTENT_ROOTS" value="true" />
+-      <option name="ADD_SOURCE_ROOTS" value="true" />
+-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/views/gui/adicionar/addProduto.py" />
+-      <option name="PARAMETERS" value="" />
+-      <option name="SHOW_COMMAND_LINE" value="false" />
+-      <option name="EMULATE_TERMINAL" value="false" />
+-      <option name="MODULE_MODE" value="false" />
+-      <option name="REDIRECT_INPUT" value="false" />
+-      <option name="INPUT_FILE" value="" />
+-      <method v="2" />
+-    </configuration>
+-    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true">
+-      <module name="SistemaDeVendas_LP" />
+-      <option name="INTERPRETER_OPTIONS" value="" />
+-      <option name="PARENT_ENVS" value="true" />
+-      <envs>
+-        <env name="PYTHONUNBUFFERED" value="1" />
+-      </envs>
+-      <option name="SDK_HOME" value="C:\Python39\python.exe" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/libs" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Image_as_button-Tkinter-main" />
+       <option name="IS_MODULE_SDK" value="false" />
+       <option name="ADD_CONTENT_ROOTS" value="true" />
+       <option name="ADD_SOURCE_ROOTS" value="true" />
+-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/libs/app.py" />
++      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../Image_as_button-Tkinter-main/ButtonOverImage.py" />
+       <option name="PARAMETERS" value="" />
+       <option name="SHOW_COMMAND_LINE" value="false" />
+       <option name="EMULATE_TERMINAL" value="false" />
+@@ -260,7 +86,7 @@
+       <option name="INPUT_FILE" value="" />
+       <method v="2" />
+     </configuration>
+-    <configuration name="funcionarios" type="PythonConfigurationType" factoryName="Python" temporary="true">
++    <configuration name="New Text Document" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+       <module name="SistemaDeVendas_LP" />
+       <option name="INTERPRETER_OPTIONS" value="" />
+       <option name="PARENT_ENVS" value="true" />
+@@ -268,11 +94,11 @@
+         <env name="PYTHONUNBUFFERED" value="1" />
+       </envs>
+       <option name="SDK_HOME" value="" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/views/gui/gerir" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/imagens" />
+       <option name="IS_MODULE_SDK" value="true" />
+       <option name="ADD_CONTENT_ROOTS" value="true" />
+       <option name="ADD_SOURCE_ROOTS" value="true" />
+-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/views/gui/gerir/funcionarios.py" />
++      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imagens/New Text Document.py" />
+       <option name="PARAMETERS" value="" />
+       <option name="SHOW_COMMAND_LINE" value="false" />
+       <option name="EMULATE_TERMINAL" value="false" />
+@@ -281,7 +107,7 @@
+       <option name="INPUT_FILE" value="" />
+       <method v="2" />
+     </configuration>
+-    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
++    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+       <module name="SistemaDeVendas_LP" />
+       <option name="INTERPRETER_OPTIONS" value="" />
+       <option name="PARENT_ENVS" value="true" />
+@@ -309,9 +135,9 @@
+       <envs>
+         <env name="PYTHONUNBUFFERED" value="1" />
+       </envs>
+-      <option name="SDK_HOME" value="C:\Python39\python.exe" />
++      <option name="SDK_HOME" value="" />
+       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+-      <option name="IS_MODULE_SDK" value="false" />
++      <option name="IS_MODULE_SDK" value="true" />
+       <option name="ADD_CONTENT_ROOTS" value="true" />
+       <option name="ADD_SOURCE_ROOTS" value="true" />
+       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+@@ -323,7 +149,7 @@
+       <option name="INPUT_FILE" value="" />
+       <method v="2" />
+     </configuration>
+-    <configuration name="menu (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
++    <configuration name="menu" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+       <module name="SistemaDeVendas_LP" />
+       <option name="INTERPRETER_OPTIONS" value="" />
+       <option name="PARENT_ENVS" value="true" />
+@@ -331,11 +157,11 @@
+         <env name="PYTHONUNBUFFERED" value="1" />
+       </envs>
+       <option name="SDK_HOME" value="" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/views/gui" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gui" />
+       <option name="IS_MODULE_SDK" value="true" />
+       <option name="ADD_CONTENT_ROOTS" value="true" />
+       <option name="ADD_SOURCE_ROOTS" value="true" />
+-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/views/gui/menu.py" />
++      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gui/menu.py" />
+       <option name="PARAMETERS" value="" />
+       <option name="SHOW_COMMAND_LINE" value="false" />
+       <option name="EMULATE_TERMINAL" value="false" />
+@@ -344,50 +170,16 @@
+       <option name="INPUT_FILE" value="" />
+       <method v="2" />
+     </configuration>
+-    <configuration name="produtos" type="PythonConfigurationType" factoryName="Python" temporary="true">
+-      <module name="SistemaDeVendas_LP" />
+-      <option name="INTERPRETER_OPTIONS" value="" />
+-      <option name="PARENT_ENVS" value="true" />
+-      <envs>
+-        <env name="PYTHONUNBUFFERED" value="1" />
+-      </envs>
+-      <option name="SDK_HOME" value="" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/views/gui/gerir" />
+-      <option name="IS_MODULE_SDK" value="true" />
+-      <option name="ADD_CONTENT_ROOTS" value="true" />
+-      <option name="ADD_SOURCE_ROOTS" value="true" />
+-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/views/gui/gerir/produtos.py" />
+-      <option name="PARAMETERS" value="" />
+-      <option name="SHOW_COMMAND_LINE" value="false" />
+-      <option name="EMULATE_TERMINAL" value="false" />
+-      <option name="MODULE_MODE" value="false" />
+-      <option name="REDIRECT_INPUT" value="false" />
+-      <option name="INPUT_FILE" value="" />
+-      <method v="2" />
+-    </configuration>
+-    <list>
+-      <item itemvalue="Python.main" />
+-      <item itemvalue="Python.main (1)" />
+-      <item itemvalue="Python.app" />
+-      <item itemvalue="Python.funcionarios" />
+-      <item itemvalue="Python.produtos" />
+-      <item itemvalue="Python.menu (1)" />
+-      <item itemvalue="Python.addProduto" />
+-    </list>
+-    <recent_temporary>
+-      <list>
+-        <item itemvalue="Python.addProduto" />
+-        <item itemvalue="Python.menu (1)" />
+-        <item itemvalue="Python.produtos" />
+-        <item itemvalue="Python.funcionarios" />
+-        <item itemvalue="Python.app" />
++    <recent_temporary>
++      <list>
++        <item itemvalue="Python.New Text Document" />
++        <item itemvalue="Python.main (1)" />
++        <item itemvalue="Python.menu" />
++        <item itemvalue="Python.ButtonOverImage" />
+       </list>
+     </recent_temporary>
+   </component>
+-  <component name="SpellCheckerSettings" BundledDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+-  <component name="SvnConfiguration">
+-    <configuration />
+-  </component>
++  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+       <changelist id="67b6d644-0ff8-4b2f-b5a8-66e8e76d39e6" name="Default Changelist" comment="" />
+@@ -494,381 +286,175 @@
+       <option name="project" value="LOCAL" />
+       <updated>1627532229841</updated>
+     </task>
+-    <task id="LOCAL-00015" summary="Pastas adicionadas:&#10;-config&#10; #Criação de um arquivo com constantes responsaveis por conectar a bd&#10;-libs&#10; #Criação da classe App entre outras...&#10;-models&#10;-public&#10;-views">
+-      <created>1627662960688</created>
++    <task id="LOCAL-00015" summary="tkinter">
++      <created>1627695362117</created>
+       <option name="number" value="00015" />
+       <option name="presentableId" value="LOCAL-00015" />
+       <option name="project" value="LOCAL" />
+-      <updated>1627662960688</updated>
++      <updated>1627695362117</updated>
+     </task>
+-    <task id="LOCAL-00016" summary="Pastas adicionadas:&#10;-config&#10; #Criação de um arquivo com constantes responsaveis por conectar a bd&#10;-libs&#10; #Criação da classe App entre outras...&#10;-models&#10;-public&#10;-views">
+-      <created>1627663125735</created>
++    <task id="LOCAL-00016" summary="tkinter">
++      <created>1627695380129</created>
+       <option name="number" value="00016" />
+       <option name="presentableId" value="LOCAL-00016" />
+       <option name="project" value="LOCAL" />
+-      <updated>1627663125735</updated>
++      <updated>1627695380129</updated>
+     </task>
+-    <task id="LOCAL-00017" summary="Pastas adicionadas:&#10;-config&#10; #Criação de um arquivo com constantes responsaveis por conectar a bd&#10;-libs&#10; #Criação da classe App entre outras...&#10;-models&#10;-public&#10;-views">
+-      <created>1627663352162</created>
++    <task id="LOCAL-00017" summary="tkinter">
++      <created>1627697259652</created>
+       <option name="number" value="00017" />
+       <option name="presentableId" value="LOCAL-00017" />
+       <option name="project" value="LOCAL" />
+-      <updated>1627663352162</updated>
++      <updated>1627697259652</updated>
+     </task>
+-    <task id="LOCAL-00018" summary="Conexão com bd">
+-      <created>1627766329191</created>
++    <task id="LOCAL-00018" summary="tkinter">
++      <created>1627697377558</created>
+       <option name="number" value="00018" />
+       <option name="presentableId" value="LOCAL-00018" />
+       <option name="project" value="LOCAL" />
+-      <updated>1627766329191</updated>
++      <updated>1627697377558</updated>
+     </task>
+-    <task id="LOCAL-00019" summary="Conexão com bd">
+-      <created>1627766356042</created>
++    <task id="LOCAL-00019" summary="tkinter">
++      <created>1627698967610</created>
+       <option name="number" value="00019" />
+       <option name="presentableId" value="LOCAL-00019" />
+       <option name="project" value="LOCAL" />
+-      <updated>1627766356042</updated>
++      <updated>1627698967610</updated>
+     </task>
+-    <task id="LOCAL-00020" summary="Conexão com bd&#10;&#10;Signed-off-by: Isidro Bata &lt;bata.isidro@gmail.com&gt;">
+-      <created>1627766527079</created>
++    <task id="LOCAL-00020" summary="tkinter">
++      <created>1627738561150</created>
+       <option name="number" value="00020" />
+       <option name="presentableId" value="LOCAL-00020" />
+       <option name="project" value="LOCAL" />
+-      <updated>1627766527079</updated>
++      <updated>1627738561150</updated>
+     </task>
+-    <task id="LOCAL-00021" summary="Visualizar produtos&#10;&#10;Signed-off-by: Isidro Bata &lt;bata.isidro@gmail.com&gt;">
+-      <created>1627863870438</created>
++    <task id="LOCAL-00021" summary="tkinter">
++      <created>1627756827671</created>
+       <option name="number" value="00021" />
+       <option name="presentableId" value="LOCAL-00021" />
+       <option name="project" value="LOCAL" />
+-      <updated>1627863870438</updated>
++      <updated>1627756827672</updated>
+     </task>
+-    <task id="LOCAL-00022" summary="Visualizar produtos&#10;&#10;Signed-off-by: Isidro Bata &lt;bata.isidro@gmail.com&gt;">
+-      <created>1627864221301</created>
++    <task id="LOCAL-00022" summary="tkinter">
++      <created>1627761963548</created>
+       <option name="number" value="00022" />
+       <option name="presentableId" value="LOCAL-00022" />
+       <option name="project" value="LOCAL" />
+-      <updated>1627864221301</updated>
++      <updated>1627761963548</updated>
++    </task>
++    <task id="LOCAL-00023" summary="tkinter">
++      <created>1627779853769</created>
++      <option name="number" value="00023" />
++      <option name="presentableId" value="LOCAL-00023" />
++      <option name="project" value="LOCAL" />
++      <updated>1627779853769</updated>
++    </task>
++    <task id="LOCAL-00024" summary="tkinter">
++      <created>1627782685743</created>
++      <option name="number" value="00024" />
++      <option name="presentableId" value="LOCAL-00024" />
++      <option name="project" value="LOCAL" />
++      <updated>1627782685743</updated>
++    </task>
++    <task id="LOCAL-00025" summary="Adicionar Categoria">
++      <created>1627787156098</created>
++      <option name="number" value="00025" />
++      <option name="presentableId" value="LOCAL-00025" />
++      <option name="project" value="LOCAL" />
++      <updated>1627787156098</updated>
++    </task>
++    <task id="LOCAL-00026" summary="Adicionar Categoria">
++      <created>1627787167738</created>
++      <option name="number" value="00026" />
++      <option name="presentableId" value="LOCAL-00026" />
++      <option name="project" value="LOCAL" />
++      <updated>1627787167738</updated>
++    </task>
++    <task id="LOCAL-00027" summary="Adicionar Categoria">
++      <created>1627787228849</created>
++      <option name="number" value="00027" />
++      <option name="presentableId" value="LOCAL-00027" />
++      <option name="project" value="LOCAL" />
++      <updated>1627787228849</updated>
++    </task>
++    <task id="LOCAL-00028" summary="Adicionar Categoria">
++      <created>1627823341901</created>
++      <option name="number" value="00028" />
++      <option name="presentableId" value="LOCAL-00028" />
++      <option name="project" value="LOCAL" />
++      <updated>1627823341901</updated>
++    </task>
++    <task id="LOCAL-00029" summary="Adicionar Categoria">
++      <created>1627823716785</created>
++      <option name="number" value="00029" />
++      <option name="presentableId" value="LOCAL-00029" />
++      <option name="project" value="LOCAL" />
++      <updated>1627823716785</updated>
++    </task>
++    <task id="LOCAL-00030" summary="Operacoes Categoria">
++      <created>1627824099693</created>
++      <option name="number" value="00030" />
++      <option name="presentableId" value="LOCAL-00030" />
++      <option name="project" value="LOCAL" />
++      <updated>1627824099693</updated>
++    </task>
++    <task id="LOCAL-00031" summary="Operacoes Categoria">
++      <created>1627824485027</created>
++      <option name="number" value="00031" />
++      <option name="presentableId" value="LOCAL-00031" />
++      <option name="project" value="LOCAL" />
++      <updated>1627824485027</updated>
++    </task>
++    <task id="LOCAL-00032" summary="Operacoes Categoria">
++      <created>1627828970748</created>
++      <option name="number" value="00032" />
++      <option name="presentableId" value="LOCAL-00032" />
++      <option name="project" value="LOCAL" />
++      <updated>1627828970748</updated>
++    </task>
++    <task id="LOCAL-00033" summary="Operacoes Funcionario">
++      <created>1627843509259</created>
++      <option name="number" value="00033" />
++      <option name="presentableId" value="LOCAL-00033" />
++      <option name="project" value="LOCAL" />
++      <updated>1627843509259</updated>
++    </task>
++    <task id="LOCAL-00034" summary="Operacoes Funcionario">
++      <created>1627848886872</created>
++      <option name="number" value="00034" />
++      <option name="presentableId" value="LOCAL-00034" />
++      <option name="project" value="LOCAL" />
++      <updated>1627848886872</updated>
+     </task>
+-    <option name="localTasksCounter" value="23" />
++    <task id="LOCAL-00035" summary="Operacoes Funcionario">
++      <created>1627853892814</created>
++      <option name="number" value="00035" />
++      <option name="presentableId" value="LOCAL-00035" />
++      <option name="project" value="LOCAL" />
++      <updated>1627853892814</updated>
++    </task>
++    <option name="localTasksCounter" value="36" />
+     <servers />
+   </component>
+-  <component name="TodoView">
+-    <todo-panel id="selected-file">
+-      <is-autoscroll-to-source value="true" />
+-    </todo-panel>
+-    <todo-panel id="all">
+-      <are-packages-shown value="true" />
+-      <is-autoscroll-to-source value="true" />
+-    </todo-panel>
+-  </component>
+-  <component name="ToolWindowManager">
+-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+-    <editor active="true" />
+-    <layout>
+-      <window_info id="Favorites" order="0" side_tool="true" />
+-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.1601686" />
+-      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+-      <window_info anchor="bottom" id="Terminal" order="0" weight="0.2535211" />
+-      <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50052685" side_tool="true" weight="0.32936078" />
+-      <window_info anchor="bottom" id="Python Console" order="2" />
+-      <window_info anchor="bottom" id="Message" order="3" />
+-      <window_info anchor="bottom" id="Find" order="4" />
+-      <window_info anchor="bottom" id="Version Control" order="5" weight="0.32936078" />
+-      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.49947312" weight="0.32936078" />
+-      <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
+-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
+-      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
+-      <window_info anchor="bottom" id="TODO" order="10" weight="0.32936078" />
+-      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49947312" weight="0.32936078" />
+-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+-    </layout>
+-    <layout-to-restore>
+-      <window_info id="Favorites" order="0" side_tool="true" />
+-      <window_info content_ui="combo" id="Project" order="1" weight="0.1601686" />
+-      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+-      <window_info anchor="bottom" id="Terminal" order="0" weight="0.32936078" />
+-      <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50052685" side_tool="true" weight="0.32936078" />
+-      <window_info anchor="bottom" id="Python Console" order="2" />
+-      <window_info anchor="bottom" id="Message" order="3" />
+-      <window_info anchor="bottom" id="Find" order="4" />
+-      <window_info anchor="bottom" id="Version Control" order="5" weight="0.32936078" />
+-      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.49947312" visible="true" weight="0.32936078" />
+-      <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
+-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
+-      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
+-      <window_info anchor="bottom" id="TODO" order="10" />
+-      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49947312" weight="0.32936078" />
+-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+-    </layout-to-restore>
+-  </component>
+   <component name="Vcs.Log.Tabs.Properties">
+     <option name="TAB_STATES">
+       <map>
+         <entry key="MAIN">
+           <value>
+-            <State>
+-              <option name="RECENTLY_FILTERED_USER_GROUPS">
+-                <collection />
+-              </option>
+-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+-                <collection />
+-              </option>
+-            </State>
++            <State />
+           </value>
+         </entry>
+       </map>
+     </option>
+-    <option name="RECENT_FILTERS">
+-      <map>
+-        <entry key="Branch">
+-          <value>
+-            <list />
+-          </value>
+-        </entry>
+-        <entry key="User">
+-          <value>
+-            <list />
+-          </value>
+-        </entry>
+-      </map>
+-    </option>
++    <option name="oldMeFiltersMigrated" value="true" />
+   </component>
+   <component name="VcsManagerConfiguration">
+-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
++    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+     <MESSAGE value="1st commit" />
+     <MESSAGE value="tkinter" />
+-    <MESSAGE value="Pastas adicionadas:&#10;-config&#10; #Criação de um arquivo com constantes responsaveis por conectar a bd&#10;-libs&#10; #Criação da classe App entre outras...&#10;-models&#10;-public&#10;-views" />
+-    <MESSAGE value="Conexão com bd" />
+-    <MESSAGE value="Conexão com bd&#10;&#10;Signed-off-by: Isidro Bata &lt;bata.isidro@gmail.com&gt;" />
+-    <MESSAGE value="Visualizar produtos&#10;&#10;Signed-off-by: Isidro Bata &lt;bata.isidro@gmail.com&gt;" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Visualizar produtos&#10;&#10;Signed-off-by: Isidro Bata &lt;bata.isidro@gmail.com&gt;" />
+-    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+-  </component>
+-  <component name="editorHistoryManager">
+-    <entry file="file://$PROJECT_DIR$/public/imagens/btnCategorias.png">
+-      <provider selected="true" editor-type-id="images" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/public/imagens/btnEmpregados.png">
+-      <provider selected="true" editor-type-id="images" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/public/imagens/btnVendas.png">
+-      <provider selected="true" editor-type-id="images" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/public/imagens/menuBG.png">
+-      <provider selected="true" editor-type-id="images" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/public/imagens/shopping_cart.ico">
+-      <provider selected="true" editor-type-id="images" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/public/imagens/shopping_cart.png">
+-      <provider selected="true" editor-type-id="images" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/views/gui/adicionar/__init__.py">
+-      <provider selected="true" editor-type-id="text-editor" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/views/gui/editar/__init__.py">
+-      <provider selected="true" editor-type-id="text-editor" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/views/gui/gerir/__init__.py">
+-      <provider selected="true" editor-type-id="text-editor" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/venv/Scripts/python.exe">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="-891" />
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/views/gui/__init__.py">
+-      <provider selected="true" editor-type-id="text-editor" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/BaseDeDados/__init__.py" />
+-    <entry file="file://$PROJECT_DIR$/objectos/__init__.py" />
+-    <entry file="file://$PROJECT_DIR$/views/__init__.py">
+-      <provider selected="true" editor-type-id="text-editor" />
+-    </entry>
+-    <entry file="file://C:/Python39/Lib/site-packages/mysql/connector/__init__.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="821">
+-          <caret line="272" selection-start-line="272" selection-end-line="272" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://C:/Python39/Lib/site-packages/mysql/connector/connection.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="821">
+-          <caret line="71" selection-start-line="71" selection-end-line="71" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/libs/model.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="108">
+-          <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/models/inserirModel.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="378">
+-          <caret line="14" column="13" lean-forward="true" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/libs/app.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="162">
+-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/main.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="27">
+-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/views/gui/menu.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="1782">
+-          <caret line="66" column="11" lean-forward="true" selection-start-line="66" selection-start-column="11" selection-end-line="66" selection-end-column="11" />
+-          <folding>
+-            <element signature="e#0#21#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://C:/Python39/Lib/site-packages/mysql/connector/connection_cext.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="299">
+-          <caret line="402" column="8" selection-start-line="402" selection-start-column="8" selection-end-line="402" selection-end-column="8" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/views/gui/adicionar/addCategoria.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="1647">
+-          <caret line="61" column="22" selection-start-line="61" selection-start-column="22" selection-end-line="61" selection-end-column="22" />
+-          <folding>
+-            <element signature="e#0#25#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/views/gui/editar/editCategoria.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="382">
+-          <caret line="81" column="20" lean-forward="true" selection-start-line="81" selection-start-column="20" selection-end-line="81" selection-end-column="20" />
+-          <folding>
+-            <element signature="e#0#25#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://C:/Python39/Lib/tkinter/__init__.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="313">
+-          <caret line="3053" column="8" selection-start-line="3053" selection-start-column="8" selection-end-line="3053" selection-end-column="8" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/views/gui/gerir/categorias.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="308">
+-          <caret line="180" column="17" selection-start-line="180" selection-start-column="17" selection-end-line="180" selection-end-column="17" />
+-          <folding>
+-            <element signature="e#0#25#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/views/gui/adicionar/addProduto.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="324">
+-          <caret line="30" column="8" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="8" />
+-          <folding>
+-            <element signature="e#0#25#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/views/gui/adicionar/addFuncionario.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="-1734">
+-          <caret line="45" column="84" selection-start-line="45" selection-start-column="68" selection-end-line="45" selection-end-column="84" />
+-          <folding>
+-            <element signature="e#0#29#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/views/gui/gerir/funcionarios.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="351">
+-          <caret line="112" lean-forward="true" selection-start-line="112" selection-end-line="112" />
+-          <folding>
+-            <element signature="e#0#25#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/views/gui/editar/editFuncionario.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="2434">
+-          <caret line="188" column="24" lean-forward="true" selection-start-line="188" selection-start-column="4" selection-end-line="188" selection-end-column="24" />
+-          <folding>
+-            <element signature="e#0#29#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/libs/objects.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="659">
+-          <caret line="36" column="30" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="34" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/views/gui/editar/editProduto.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="702">
+-          <caret line="107" column="36" lean-forward="true" selection-start-line="97" selection-start-column="16" selection-end-line="107" selection-end-column="36" />
+-          <folding>
+-            <element signature="e#0#25#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/views/gui/gerir/produtos.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="1567">
+-          <caret line="149" column="42" lean-forward="true" selection-start-line="149" selection-start-column="42" selection-end-line="149" selection-end-column="42" />
+-          <folding>
+-            <element signature="e#0#25#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/libs/database.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="456">
+-          <caret line="81" column="56" lean-forward="true" selection-start-line="81" selection-start-column="56" selection-end-line="81" selection-end-column="56" />
+-          <folding>
+-            <element signature="e#0#22#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/config/config.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="486">
+-          <caret line="18" column="28" lean-forward="true" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
+-        </state>
+-      </provider>
+-    </entry>
++    <MESSAGE value="Adicionar Categoria" />
++    <MESSAGE value="Operacoes Categoria" />
++    <MESSAGE value="Operacoes Funcionario" />
++    <option name="LAST_COMMIT_MESSAGE" value="Operacoes Funcionario" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" project-jdk-name=\"Python 3.7\" project-jdk-type=\"Python SDK\" />\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 4eb413ec48c38fc17615be37c8f198de4ddd7e27)
++++ b/.idea/misc.xml	(date 1627914174279)
+@@ -1,4 +1,4 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.7" project-jdk-type="Python SDK" />
++  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 (SistemaDeVendas_LP) (2)" project-jdk-type="Python SDK" />
+ </project>
+\ No newline at end of file
