@@ -1,5 +1,3 @@
-from itertools import takewhile
-
 import mysql.connector
 
 from config import config
@@ -8,14 +6,20 @@ from libs.objects import *
 lstCateg = list()
 lstFunc = list()
 lstLogin = list()
+lstProd = list()
 
 
 class Database:
     mydb = None
 
     def conectar(self):
-        self.mydb = mysql.connector.connect(host=config.HOST, user=config.USER, password=config.PASSWORD,
-                                            port=config.PORT, database=config.DB)
+        self.mydb = mysql.connector.connect(
+            host=config.HOST,
+            user=config.USER,
+            password=config.PASSWORD,
+            port=config.PORT,
+            database=config.DB
+        )
 
     def lerCategoria(self):
         lstCateg.clear()
@@ -31,6 +35,13 @@ class Database:
         for f in func:
             lstFunc.append(Funcionario(f[0], f[1], f[2], f[3], f[4], f[5], f[6], f[7], f[8], f[9], f[10]))
 
+    def lerProduto(self):
+        lstProd.clear()
+        cursor.execute('select * from produto')
+        prod = cursor.fetchall()
+        for p in prod:
+            lstProd.append(Produto(p[0], p[1], p[3], p[4], p[6]))
+
     def lerLogin(self):
         lstLogin.clear()
         cursor.execute('select * from login')
@@ -42,6 +53,7 @@ class Database:
         self.lerCategoria()
         self.lerFuncionario()
         self.lerLogin()
+        self.lerProduto()
 
     def addCateg(self, nome):
         insert = "INSERT INTO categoria(nome) VALUES(,%s)"

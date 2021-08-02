@@ -25,3 +25,12 @@ class Login:
         self.username = username
         self.password = password
         self.nivel = nivel
+
+
+class Produto:
+    def __init__(self, idProd, nomeProd, preco, stock, idCat):
+        self.idProd = idProd
+        self.nomeProd = nomeProd
+        self.preco = preco
+        self.stock = stock
+        self.idCat = idCat

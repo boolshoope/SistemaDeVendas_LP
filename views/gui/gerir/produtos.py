@@ -2,8 +2,9 @@ from time import strftime
 from tkinter import *
 from tkinter import ttk, messagebox
 
-from views.gui.adicionar import addProduto
+from libs import database
 from views.gui import menu
+from views.gui.adicionar import addProduto
 from views.gui.editar import editProduto
 
 
@@ -122,7 +123,7 @@ class Produtos:
         self.tree.column("#3", stretch=NO, minwidth=0, width=100)
         self.tree.column("#4", stretch=NO, minwidth=0, width=120)
 
-        # self.DisplayData()
+        self.DisplayData()
 
     sel = []
 
@@ -132,22 +133,70 @@ class Produtos:
             if i not in self.sel:
                 self.sel.append(i)
 
+    def DisplayData(self):
+        self.tree.delete(*self.tree.get_children())
+        for i in range(len(database.lstProd)):
+            self.tree.insert('', 'end', values=(
+                database.lstProd[i].idProd,
+                database.lstProd[i].nomeProd,
+                database.lstProd[i].preco,
+                database.lstProd[i].stock,
+                database.lstProd[i].idCat
+            ))
+
     def time(self):
         string = strftime("%H:%M:%S %p")
         self.clock.config(text=string)
         self.clock.after(1000, self.time)
 
     def btnProcurarIdProdutos_click(self):
-        print("btnProcurarIdProdutos clicado")
+        val = []
+        for i in self.tree.get_children():
+            val.append(i)
+            for j in self.tree.item(i)["values"]:
+                val.append(j)
+
+        if self.txtIdProduto.get() == "":
+            messagebox.showwarning("Erro!!", "Campo vazio.", parent=mainLbl)
+        else:
+            for search in val:
+                if search == int(self.txtIdProduto.get()):
+                    self.tree.selection_set(val[val.index(search) - 1])
+                    self.tree.focus(val[val.index(search) - 1])
+                    messagebox.showwarning("Sucesso!!", "Id produto: {} encotrado.".format(self.txtIdProduto.get()),
+                                        parent=mainLbl)
+                    break
+            else:
+                messagebox.showwarning("Erro!!", "Id produto: {} não encontrado.".format(self.txtIdProduto.get()),
+                                     parent=mainLbl)
+
 
     def btnProcurarNomeProdutos_click(self):
-        print("btnProcurarNomeProdutos clicado")
+        val = []
+        for i in self.tree.get_children():
+            val.append(i)
+            for j in self.tree.item(i)["values"]:
+                val.append(j)
+
+        for search in val:
+            if search == self.txtNomeProduto.get():
+                self.tree.selection_set(val[val.index(search) - 2])
+                self.tree.focus(val[val.index(search) - 2])
+                messagebox.showinfo("Sucesso!!", "Nome: {} encotrado.".format(self.txtNomeProduto.get()),
+                                    parent=mainLbl)
+                break
+        else:
+            messagebox.showwarning("Erro!!", "Nome: {} não encontrado.".format(self.txtNomeProduto.get()),
+                                 parent=mainLbl)
 
     def btnUpdProdutos_click(self):
         editProduto.callEditProdutos()
 
     def btnDelProdutos_click(self):
-        print("btnDelProdutos clicado")
+        if len(self.sel) != 0:
+            print("BTCC")
+        else:
+            messagebox.showerror("Erro!!", "Por favor, selecione um item na lista.", parent=mainLbl)
 
 
 def sair():
