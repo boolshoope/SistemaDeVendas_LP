@@ -141,26 +141,13 @@ class Produtos:
                 database.lstProd[i].nomeProd,
                 database.lstProd[i].preco,
                 database.lstProd[i].stock,
-                self.visualizarCategoriaProduto(i)
+                self.visualizarCategoriaProduto(database.lstProd[i].idCat)
             ))
 
     def visualizarCategoriaProduto(self, i):
-        categ = ""
-        if database.lstProd[i].idCat == 1:
-            categ = "Sumos"
-            return categ
-        elif database.lstProd[i].idCat == 2:
-            categ = "Pasta de Dentes"
-            return categ
-        elif database.lstProd[i].idCat == 3:
-            categ = "Bebidas Alcolicas"
-            return categ
-        elif database.lstProd[i].idCat == 4:
-            categ = "Doces"
-            return categ
-        elif database.lstProd[i].idCat == 5:
-            categ = "Snacks"
-            return categ
+        for c in database.lstCateg:
+            if i == c.idCateg:
+                return c.nome
 
 
     def time(self):
