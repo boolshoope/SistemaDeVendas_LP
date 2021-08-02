@@ -95,7 +95,6 @@ class EditProduto:
                 self.txtQuantStock.insert(0, database.lstProd[i].stock)
                 self.txtCodBarras.insert(0, database.lstProd[i].codBarras)
 
-
                 categ = ""
                 if database.lstProd[i].idCat == 1:
                     categ = "Sumos"
@@ -109,9 +108,6 @@ class EditProduto:
                     categ = "Snacks"
 
                 self.cboCategoria.set(categ)
-
-
-
 
     def btnActualizar_click(self):
         nomePro = self.txtNome.get()

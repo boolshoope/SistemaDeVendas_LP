@@ -116,8 +116,6 @@ class AddProduto:
         #self.txtCodBarras.delete(0, END)
 
 
-
-
 def callAddProdutos():
     global p_add
     global page3
