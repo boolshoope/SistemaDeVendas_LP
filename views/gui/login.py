@@ -2,11 +2,12 @@ from tkinter import *
 
 
 class Login:
-    def __init__(self, top=None):
-        top.geometry("1366x768")
-        top.resizable(0, 0)
-        top.title("Login")
+    def __init__(self, tipo):
+        p_add.geometry("1366x768")
+        p_add.resizable(0, 0)
+        p_add.title("Login")
 
+        print(tipo)
         self.label1 = Label(p_add)
         self.label1.place(relx=0, rely=0, width=1366, height=768)
         self.img = PhotoImage(file="public/imagens/login.png")
@@ -41,9 +42,9 @@ class Login:
 
 
 
-def callLogin():
+def callLogin(tipo):
     global p_add
     global page3
     p_add = Tk()
-    page3 = Login(p_add)
+    page3 = Login(tipo)
     p_add.mainloop()
