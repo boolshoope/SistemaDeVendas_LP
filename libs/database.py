@@ -89,6 +89,20 @@ class Database:
         cursor.execute(insert, [id,username, password, nivel])
         dbb.commit()
 
+    def addVenda(self, data, preco, idFunc):
+        insert = "INSERT INTO venda(data, precoTotal, idFuncionario) VALUES(?,?,?)"
+        cursor.execute(insert, [data, preco, idFunc])
+        dbb.commit()
+
+    def getIdVenda(self):
+        id = lstVendas[len(lstVendas) - 1].idVenda
+        return id
+
+    def addProdVenda(self, idVenda, idProd, quant):
+        insert = "INSERT INTO prodVenda(idVenda, idProduto, quantidade) VALUES(?,?,?)"
+        cursor.execute(insert, [idVenda, idProd, quant])
+        dbb.commit()
+
     def updProd(self, idProd, nomePro, descricao, preco, qtdStock, codBarras, listCtg):
         update = "UPDATE produto SET nome = ?, descricao = ?, preco = ?, stock = ?, codBarras = ?," \
                  "idCategoria = ? WHERE idProduto = ?"
