@@ -2,11 +2,10 @@ from time import strftime
 from tkinter import *
 from tkinter import ttk, messagebox
 
-from views.gui import menu
-from libs import database
-from libs.database import Database
+from tkcalendar import *
 
-import mysql.connector
+from libs import database
+from views.gui import menu
 
 
 class Vendas:
@@ -32,10 +31,9 @@ class Vendas:
         self.clock.configure(foreground="#000000")
         self.clock.configure(background="#ffffff")
 
-        self.txtData = Entry(mainLbl)
+        self.txtData = DateEntry(mainLbl, date_pattern='yyyy-mm-dd')
         self.txtData.place(relx=0.040, rely=0.286, width=240, height=28)
         self.txtData.configure(font="-family {Poppins} -size 12")
-        self.txtData.configure(relief="flat")
 
         self.btnProcurarData = Button(mainLbl, text="Procurar", command=self.btnProcurarDataVenda_click)
         self.btnProcurarData.place(relx=0.229, rely=0.289, width=76, height=23)
@@ -129,7 +127,7 @@ class Vendas:
             messagebox.showerror("Erro!!", "Data invalida.", parent=mainLbl)
         else:
             for search in val:
-                if search == str (self.txtData.get()):
+                if search == str(self.txtData.get()):
                     self.tree.selection_set(val[val.index(search) - 2])
                     self.tree.focus(val[val.index(search) - 2])
                     messagebox.showinfo("Sucesso!!", "Vendas: {} encotrado.".format(self.txtData.get()),
