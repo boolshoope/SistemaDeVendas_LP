@@ -57,7 +57,7 @@ class EditCategoria:
 
     def preencherTxt(self):
         for i in range(len(database.lstCateg)):
-            if database.lstCateg[i].idCateg == self.idCateg:
+            if int(database.lstCateg[i].idCateg) == self.idCateg:
                 self.txtNome.insert(0, database.lstCateg[i].nome)
 
     def btnActualizar_click(self):

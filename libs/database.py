@@ -1,3 +1,5 @@
+import sqlite3
+
 import mysql.connector
 
 from config import config
@@ -66,57 +68,60 @@ class Database:
 
     def addProd(self, nomePro, descricao, preco, qtdStock, codBarras, listCtg):
         insert = "INSERT INTO produto(nome, descricao, preco, stock, codBarras, idCategoria) " \
-                 "VALUES(%s,%s,%s,%s,%s,%s)"
+                 "VALUES(?,?,?,?,?,?)"
         cursor.execute(insert, [nomePro, descricao, preco, qtdStock, codBarras, listCtg])
-        self.mydb.commit()
+        dbb.commit()
 
     def addCateg(self, nome):
-        insert = "INSERT INTO categoria(nome) VALUES(%s)"
+        insert = "INSERT INTO categoria(nome) VALUES(?)"
         cursor.execute(insert, [nome])
-        self.mydb.commit()
+        dbb.commit()
 
     def addFunc(self, pNome, apelido, dataNascimento, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2):
         insert = "INSERT INTO funcionario(pNome, apelido, dataNascimento, sexo, nrBI, bairro, nrCasa," \
-                 "quarteirao, tel1, tel2) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                 "quarteirao, tel1, tel2) VALUES(?,?,?,?,?,?,?,?,?,?)"
         cursor.execute(insert, [pNome, apelido, dataNascimento, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2])
-        self.mydb.commit()
+        dbb.commit()
 
     def addLogin(self, username, password, nivel):
         id = lstFunc[len(lstFunc) - 1].idFunc
-        insert = "INSERT INTO login(idFuncionario, username, password, nivel) VALUES(%s,%s,%s,%s)"
+        insert = "INSERT INTO login(idFuncionario, username, password, nivel) VALUES(?,?,?,?)"
         cursor.execute(insert, [id,username, password, nivel])
-        self.mydb.commit()
+        dbb.commit()
 
     def updProd(self, idProd, nomePro, descricao, preco, qtdStock, codBarras, listCtg):
-        update = "UPDATE produto SET nome = %s, descricao = %s, preco = %s, stock = %s, codBarras = %s," \
-                 "idCategoria = %s WHERE idProduto = %s"
+        update = "UPDATE produto SET nome = ?, descricao = ?, preco = ?, stock = ?, codBarras = ?," \
+                 "idCategoria = ? WHERE idProduto = ?"
         cursor.execute(update, [nomePro, descricao, preco, qtdStock, codBarras, listCtg, int(idProd)])
-        self.mydb.commit()
+        dbb.commit()
 
     def updCateg(self, idCateg, nome):
-        update = "UPDATE categoria SET nome = %s WHERE idCategoria = %s"
+        update = "UPDATE categoria SET nome = ? WHERE idCategoria = ?"
         cursor.execute(update, [nome, int(idCateg)])
-        self.mydb.commit()
+        dbb.commit()
 
     def updFunc(self, idFunc, pNome, apelido, dataNascimento, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2):
-        update = "UPDATE funcionario SET pNome = %s, apelido = %s, dataNascimento = %s, sexo = %s, nrBI = %s, bairro = %s," \
-                 "nrCasa = %s, quarteirao = %s, tel1 = %s, tel2 = %s WHERE idFuncionario = %s"
+        update = "UPDATE funcionario SET pNome = ?, apelido = ?, dataNascimento = ?, sexo = ?, nrBI = ?, bairro = ?," \
+                 "nrCasa = ?, quarteirao = ?, tel1 = ?, tel2 = ? WHERE idFuncionario = ?"
         cursor.execute(update, [pNome, apelido, dataNascimento, sexo, nrBI, bairro, nrCasa, quarteirao, tel1, tel2,
                                 int(idFunc)])
-        self.mydb.commit()
+        dbb.commit()
 
     def updLogin(self, idFunc, username, password, nivel):
-        update = "UPDATE login SET username = %s, password = %s, nivel = %s WHERE idFuncionario = %s"
+        update = "UPDATE login SET username = ?, password = ?, nivel = ? WHERE idFuncionario = ?"
         cursor.execute(update, [username, password, nivel, int(idFunc)])
-        self.mydb.commit()
+        dbb.commit()
 
     def delete(self, tableName, id):
-        delete = "DELETE FROM {} WHERE id{} = %s".format(tableName, tableName)
+        delete = "DELETE FROM {} WHERE id{} = ?".format(tableName, tableName)
         cursor.execute(delete, [id])
-        self.mydb.commit()
+        # self.mydb.commit()
+        dbb.commit()
 
 
 db = Database()
-db.conectar()
-cursor = db.mydb.cursor()
+with sqlite3.connect("libs/vendas.db") as dbb:
+    cursor = dbb.cursor()
+# db.conectar()
+# cursor = db.mydb.cursor()
 db.lerBD()

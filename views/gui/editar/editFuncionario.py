@@ -113,7 +113,7 @@ class EditFuncionario:
 
     def preencherTxt(self):
         for i in range(len(database.lstFunc)):
-            if database.lstFunc[i].idFunc == self.idFunc:
+            if int(database.lstFunc[i].idFunc) == self.idFunc:
                 self.txtNome.insert(0, database.lstFunc[i].pNome)
                 self.txtApelido.insert(0, database.lstFunc[i].apelido)
                 dataNasc = datetime.strptime(str(database.lstFunc[i].dataNascimento), "%Y-%m-%d").strftime('%d/%m/%Y')

@@ -91,7 +91,7 @@ class EditProduto:
 
     def preencherTxt(self):
         for i in range(len(database.lstProd)):
-            if database.lstProd[i].idProd == self.idProd:
+            if int(database.lstProd[i].idProd) == self.idProd:
                 self.txtIdProduto.insert(0, database.lstProd[i].idProd)
                 self.txtNome.insert(0, database.lstProd[i].nomeProd)
                 self.txtDescricao.insert(0, database.lstProd[i].descricao)
