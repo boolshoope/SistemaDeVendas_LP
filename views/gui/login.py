@@ -1,4 +1,8 @@
 from tkinter import *
+from tkinter import messagebox
+
+from libs import database
+from views.gui import menu
 
 
 class Login:
@@ -6,8 +10,12 @@ class Login:
         p_add.geometry("1366x768")
         p_add.resizable(0, 0)
         p_add.title("Login")
+        p_add.protocol("WM_DELETE_WINDOW", X_windowsBtn_click)
 
-        print(tipo)
+        global tip
+        tip = None
+        tip = tipo
+
         self.label1 = Label(p_add)
         self.label1.place(relx=0, rely=0, width=1366, height=768)
         self.img = PhotoImage(file="public/imagens/login.png")
@@ -35,12 +43,43 @@ class Login:
         self.button1.configure(font="-family {Poppins SemiBold} -size 20")
         self.button1.configure(borderwidth="0")
         self.button1.configure(text="""LOGIN""")
-        self.button1.configure(command=self.login)
+        self.button1.configure(command=self.btnLogin_click)
 
-    def login(self):
-        print("login")
+    def btnLogin_click(self):
+        estado = False
+
+        if tip == "admin":
+            for c in database.lstLogin:
+                if c.username == self.txtUsername.get() and c.password == self.txtPassword.get() and c.nivel == "admin":
+                   estado = True
+
+            if estado:
+                p_add.destroy()
+                menu.startAdmMenu()
+            else:
+                messagebox.showerror("Erro", "Usuario ou Senha invalidos", parent=p_add)
+        else:
+            for c in database.lstLogin:
+                if c.username == self.txtUsername.get() and c.password == self.txtPassword.get() and c.nivel == "caixa":
+                    estado = True
+
+            if estado:
+                p_add.destroy()
+                menu.startAdmMenu()
+            else:
+                messagebox.showerror("Erro", "Usuario ou Senha invalidos", parent=p_add)
 
 
+def sair():
+    sure = messagebox.askyesno("Voltar", "Tem a certeza que deseja voltar?", parent=p_add)
+    if sure:
+        p_add.destroy()
+        menu.btnReVisible()
+
+def X_windowsBtn_click():
+    sure = messagebox.askyesno("Sair", "Tem a certeza que deseja fechar o programa?", parent=p_add)
+    if sure:
+        exit()
 
 def callLogin(tipo):
     global p_add

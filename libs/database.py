@@ -11,7 +11,6 @@ lstLogin = list()
 lstProd = list()
 lstVendas = list()
 
-
 class Database:
     mydb = None
 

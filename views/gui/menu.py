@@ -134,7 +134,7 @@ def startMainMenu():
 
 def btnAdmMain_click():
     mainMenu.destroy()
-    login.callLogin("adm")
+    login.callLogin("admin")
 
 
 def btnCaixaMain_click():
