@@ -1,7 +1,5 @@
-from libs import app
 from views.gui import menu
 
-from views.gui.adicionar import addVenda
 # This is a sample Python script.
 
 # Press Shift+F10 to execute it or replace it with your code.
@@ -11,6 +9,6 @@ from views.gui.adicionar import addVenda
 ##### Aplicação
 #
 
-addVenda.callAddVenda()
+#addVenda.callAddVenda()
 menu.startMainMenu()
-app.App()
+#app.App()

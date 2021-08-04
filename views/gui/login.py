@@ -3,6 +3,7 @@ from tkinter import messagebox
 
 from libs import database
 from views.gui import menu
+from views.gui.adicionar import addVenda
 
 
 class Login:
@@ -65,7 +66,7 @@ class Login:
 
             if estado:
                 p_add.destroy()
-                menu.startAdmMenu()
+                addVenda.callAddVenda()
             else:
                 messagebox.showerror("Erro", "Usuario ou Senha invalidos", parent=p_add)
 
